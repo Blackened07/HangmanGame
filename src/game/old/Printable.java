@@ -1,4 +1,4 @@
-package Game;
+package game.old;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface Printable {
     String USER_INPUT_IN_GAME_WAITING_MESSAGE = "Введите букву: ";
     String ATTEMPTS_COUNT_MESSAGE = "Количество попыток: ";
     String CHAR_USER_INPUT_IN_GAME_MESSAGE = "Вы ввели букву: ";
-    String REPEAT_MESSAGE = "Данный символ уже был вами введён";
+
     String REPEAT_ABOUT_MESSAGE = "Повторно введённый символ не считается за ошибку! Вам повезло!";
     String NOT_MESSAGE = "В загаданном слове нет такой буквы";
     /// EndGameMess

@@ -1,20 +1,23 @@
-import Game.*;
+import game.*;
 
 public class Main {
     private final static String introduce = """
             Добро пожаловать в игру "Виселица"
             
-            Для начала игры введите заглавную букву 'Н'
-            Для перезапуска игры введите заглавную букву 'Р'
-            Для выхода из игры введите заглавную букву 'В'
+            Для начала игры введите Старт
+            Для перезапуска игры введите Рестарт
+            Для выхода из игры введите Выход
             
             Желаю вам приятной игры!
             """;
 
     public static void main(String[] args) {
-        RandomWordGenerator rand = new RandomWordGenerator(new Words());
-        GameProcess game = new GameProcess(new GamePics(), rand);
+        Dictionary dictionary = new Dictionary(GameFileReader.getDictionary());
+        PictureStorage pictureStorage = new PictureStorage(GameFileReader.getPictures());
+
+        RandomWordGenerator randomWordGenerator = new RandomWordGenerator(dictionary);
         System.out.println(introduce);
-        game.preStartGame();
+        Game game = new Game(pictureStorage, randomWordGenerator);
+
     }
 }

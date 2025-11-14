@@ -1,12 +1,14 @@
-package Game;
+package game.old;
+
+import game.InvalidCommandException;
 
 import java.util.Scanner;
 
 public interface GameScanner extends Printable {
-    String START_GAME_COMMAND = "Н";
-    String RESTART_GAME_COMMAND = "Р";
-    String EXIT_GAME_COMMAND = "В";
-    String NON_RUS_PATTERN = "[а-яА-Я]";
+    String START_GAME_COMMAND = "Старт";
+    String RESTART_GAME_COMMAND = "Рустарт";
+    String EXIT_GAME_COMMAND = "Выход";
+    String RUS_PATTERN = "[а-яА-Я]";
 
     default String gameScanner(boolean isGameOn) {
         Scanner sc = new Scanner(System.in);
@@ -17,7 +19,7 @@ public interface GameScanner extends Printable {
                 userTextInput = sc.nextLine();
 
                 if (userTextInput.isEmpty()) throw new InvalidCommandException(NOTHING_INPUT_MESSAGE);
-                else if (userTextInput.equals(userTextInput.replaceAll(NON_RUS_PATTERN,""))) throw new InvalidCommandException(USER_INPUT_ERROR_MESSAGE);
+                else if (userTextInput.equals(userTextInput.replaceAll(RUS_PATTERN,""))) throw new InvalidCommandException(USER_INPUT_ERROR_MESSAGE);
                 else if (userTextInput.length() != 1) throw new InvalidCommandException(MORE_THAN_ONE_CHAR_INPUT_MESSAGE);
                 else if (userTextInput.equals(START_GAME_COMMAND) || userTextInput.equals(RESTART_GAME_COMMAND) || userTextInput.equals(EXIT_GAME_COMMAND)) {
                     switch (userTextInput) {

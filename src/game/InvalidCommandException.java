@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 public class InvalidCommandException extends Exception{
     public InvalidCommandException(String message) {
