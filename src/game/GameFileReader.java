@@ -3,22 +3,26 @@ package game;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class GameFileReader {
-    private static final String WORDS_PATH = "resources/russian_Words.txt";
-    private static final String PICTURES_PATH = "resources/pics.txt";
+    private static final String DICTIONARY_PATH = "C:\\Users\\black\\IdeaProjects\\Hangman\\resources\\russian_Words.txt";
+    private static final String PICTURES_PATH = "C:\\Users\\black\\IdeaProjects\\Hangman\\resources\\pics.txt";
 
     private static final Set<String> dictionary = new HashSet<>();
     private static final List<String> pictures = new ArrayList<>();
 
-    public GameFileReader() {}
+    public GameFileReader() {
+    }
 
     static {
-        loadFiles(WORDS_PATH, PICTURES_PATH);
+        loadFiles(DICTIONARY_PATH, PICTURES_PATH);
     }
 
     public static Set<String> getDictionary() {
@@ -35,11 +39,13 @@ public class GameFileReader {
 
             try (BufferedReader reader = new BufferedReader(new FileReader(string))) {
                 switch (string) {
-                    case WORDS_PATH -> loadWords(reader);
+                    case DICTIONARY_PATH -> loadWords(reader);
                     case PICTURES_PATH -> loadPictures(reader);
+                    default -> throw new IOException();
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage() + ". Работа программы будет завершена!");
+                System.exit(0);
             }
         }
     }
@@ -71,6 +77,18 @@ public class GameFileReader {
                 symbolicPics.delete(0, symbolicPics.length());
             }
         }
+    }
+
+    private static boolean isExist() {
+        Path path1 = Paths.get(DICTIONARY_PATH);
+        Path path2 = Paths.get(PICTURES_PATH);
+        try {
+            return Files.exists(path1) && Files.exists(path2);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
     }
 
 }

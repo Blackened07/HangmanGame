@@ -1,6 +1,7 @@
 import game.*;
 
 public class Main {
+
     private final static String introduce = """
             Добро пожаловать в игру "Виселица"
             
@@ -14,6 +15,7 @@ public class Main {
             """;
 
     public static void main(String[] args) {
+
         Dictionary dictionary = new Dictionary(GameFileReader.getDictionary());
         PictureStorage pictureStorage = new PictureStorage(GameFileReader.getPictures());
         RandomWordGenerator randomWordGenerator = new RandomWordGenerator(dictionary);

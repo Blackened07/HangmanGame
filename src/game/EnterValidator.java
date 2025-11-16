@@ -1,14 +1,12 @@
 package game;
 
-import static sun.util.locale.LocaleUtils.isEmpty;
-
 public class EnterValidator {
     private static final String START_GAME = "старт";
     private final String RESTART_GAME = "рестарт";
     private final String EXIT_GAME = "выход";
 
     private static final String NOTHING_INPUT_MESSAGE = "Вы ничего не ввели, пожалуйста введите русскую букву";
-    private static final String RUS_PATTERN = "[а-яА-Я]";
+    private static final String RUS_PATTERN = "[а-яёА-ЯЁ]";
     private static final String ENG_LETTER_ENTERED = "Вы ввели цифру или букву другого алфавита, пожалуйста введите русскую букву";
     private static final String MORE_THAN_ONE_LETTER = "Вы ввели больше одной буквы, пожалуйста введите русскую букву";
 
