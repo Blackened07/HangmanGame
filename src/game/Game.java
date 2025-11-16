@@ -13,14 +13,6 @@ public class Game {
 
     private String playerEnter;
 
-    private final String START_GAME_MESSAGE = "Игра Началась!!!";
-    private final String PRESTART_GAME_MESSAGE = "Игра не началась, введите команду";
-
-    private final String WIN_MESSAGE = "ВЫ ПОБЕДИЛИ!!!";
-    private final String LOSE_MESSAGE = "Вы проиграли!";
-    private final String ENCODED_WORD_MESSAGE = "Загаданное слово: ";
-    private final String REPEAT_MESSAGE = "Данный символ уже был вами введён";
-
     public Game(PictureStorage pictures, RandomWordGenerator randomWordGenerator) {
         this.pictures = pictures;
         this.randomWordGenerator = randomWordGenerator;
@@ -30,8 +22,7 @@ public class Game {
     }
 
     public void startGameValidate() {
-        System.out.println("Для начала игры введите команду Старт." +
-                "\nЕсли хотите выйти введите Выход\nДля перезапуска активной игры введите команду Рестарт");
+        System.out.println(Printer.FOR_START_GAME_MESSAGE);
         while (!isGameOn) {
             if (enterValidator.isPlayerEnterValid(takePlayerEnter())) {
                 if (!enterValidator.isCommandOrLetter(playerEnter)) {
@@ -48,14 +39,14 @@ public class Game {
         this.encodedWordChecker = new EncodedWordChecker(encodedWord, player);
         this.renderer = new Printer(pictures, encodedWord);
 
-        System.out.println(START_GAME_MESSAGE);
-        System.out.println("Количество загаданных букв: " + encodedWord.getMaskSize());
+        System.out.println(Printer.START_GAME_MESSAGE);
+        System.out.println(Printer.ENCODED_LETTERS_NUM + encodedWord.getMaskSize());
 
         while (isGameOn) {
-            System.out.println("Уже введённые вами буквы: " + player.getEnteredLetters());
-            System.out.println("Осталось попыток: " + (attemptsNumber - player.getCount()));
+            System.out.println(Printer.EXIST_LETTER + player.getEnteredLetters());
+            System.out.println(Printer.ATTEMPTS_COUNT + (attemptsNumber - player.getCount()));
             renderer.renderMask();
-            System.out.println("Введите букву");
+            System.out.println(Printer.ENTER_THE_LETTER);
             if (enterValidator.isPlayerEnterValid(takePlayerEnter())) {
 
                 if (enterValidator.isCommandOrLetter(playerEnter)) {
@@ -67,27 +58,27 @@ public class Game {
                         player.setEnteredLetter(letter);
                         if (comparePlayerEnterWithEncodedWordsLetters(letter)) {
                             replaceEncodedToLetter(letter);
-                            System.out.println("Верно! Откройте букву: " + player.getEnteredLetter());
+                            System.out.println(Printer.RIGHT_ATTEMPT + player.getEnteredLetter());
 
                             if (encodedWordChecker.isWin()) {
-                                System.out.println(WIN_MESSAGE + ENCODED_WORD_MESSAGE + encodedWord.get());
+                                System.out.println(Printer.WIN_MESSAGE + Printer.ENCODED_WORD_MESSAGE + encodedWord.get());
                                 isGameOn = false;
                                 startGameValidate();
                             }
                         } else {
 
-                            System.out.println("Нет такой буквы!");
+                            System.out.println(Printer.WRONG_ATTEMPT);
                             renderer.renderHangman(player.getCount());
                             player.setCount();
 
                             if (isCountToLose()) {
-                                System.out.println(LOSE_MESSAGE + ENCODED_WORD_MESSAGE + encodedWord.get());
+                                System.out.println(Printer.LOSE_MESSAGE + Printer.ENCODED_WORD_MESSAGE + encodedWord.get());
                                 isGameOn = false;
                                 startGameValidate();
                             }
                         }
                     } else {
-                        System.out.println(REPEAT_MESSAGE);
+                        System.out.println(Printer.REPEAT_MESSAGE);
                     }
                 } else {
                     setGameOrExit();
@@ -106,9 +97,9 @@ public class Game {
         } else if (playerEnter.equals(enterValidator.getRESTART_GAME()) && isGameOn) {
             startGame();
         } else if (playerEnter.equals(enterValidator.getSTART_GAME()) && isGameOn) {
-            System.out.println("Игра в процессе");
+            System.out.println(Printer.GAME_IS_ON);
         } else if (playerEnter.equals(enterValidator.getRESTART_GAME()) && !isGameOn) {
-            System.out.println("Игра не запущена, нечего перезапускать");
+            System.out.println(Printer.GAME_IS_WAITING);
             startGameValidate();
         } else {
             startGameValidate();
