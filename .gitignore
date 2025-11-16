@@ -1,6 +1,6 @@
 resources/META-INF
 out
-Notes.md
+src/Notes.md
 ### IntelliJ IDEA ###
 out/
 !**/src/main/**/out/
