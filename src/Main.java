@@ -4,9 +4,11 @@ public class Main {
     private final static String introduce = """
             Добро пожаловать в игру "Виселица"
             
-            Для начала игры введите Старт
-            Для перезапуска игры введите Рестарт
-            Для выхода из игры введите Выход
+            После начала игры будет загадано слово которое вам нужно отгадать
+            Для отгадывания вводите в консоль русские буквы
+            Если в слове есть такая буква - вы угадали! Игра сообщит вам об этом
+            Если не отгадали, появится рисунок виселицы
+            Всего у вас будет 7 попыток!
             
             Желаю вам приятной игры!
             """;
@@ -14,10 +16,9 @@ public class Main {
     public static void main(String[] args) {
         Dictionary dictionary = new Dictionary(GameFileReader.getDictionary());
         PictureStorage pictureStorage = new PictureStorage(GameFileReader.getPictures());
-
         RandomWordGenerator randomWordGenerator = new RandomWordGenerator(dictionary);
         System.out.println(introduce);
         Game game = new Game(pictureStorage, randomWordGenerator);
-
+        game.startGameValidate();
     }
 }

@@ -14,7 +14,7 @@ public class PictureStorage {
         return pictures.get(index);
     }
 
-    public List<String> getPictures() {
+    public List<String> getList() {
         return pictures;
     }
 }

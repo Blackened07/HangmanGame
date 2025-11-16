@@ -27,6 +27,10 @@ public class EncodedWord {
         return encodedWordsMask;
     }
 
+    public int getMaskSize() {
+        return getMask().size();
+    }
+
     private void setEncodedWordsLetters(String encodedWord) {
         char[] encodedWordsLettersArray = encodedWord.toCharArray();
 

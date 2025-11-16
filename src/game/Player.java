@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Player {
     private final List<Character> enteredLetters;
     private char enteredLetter;
+    private int count;
     private final Scanner scanner;
 
     public Player() {
@@ -14,10 +15,17 @@ public class Player {
         this.scanner = new Scanner(System.in);
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount() {
+        this.count += 1;
+    }
+
     public List<Character> getEnteredLetters() {
         return enteredLetters;
     }
-
 
     public Scanner getScanner() {
         return scanner;
@@ -29,5 +37,22 @@ public class Player {
 
     public void setEnteredLetter(char enteredLetter) {
         this.enteredLetter = enteredLetter;
+        addLetterToList();
     }
+
+    private void addLetterToList() {
+        if (isLetterInList()) {
+            enteredLetters.add(enteredLetter);
+        }
+    }
+
+    private boolean isLetterInList() {
+        for (char letter : enteredLetters) {
+            if (letter == enteredLetter) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
