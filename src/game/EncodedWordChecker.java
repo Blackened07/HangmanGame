@@ -21,26 +21,11 @@ public class EncodedWordChecker {
     }
 
     public boolean checkLettersWithPlayerEnter(char playerEnter) {
-        for (char letter : encodedWord.get()) {
-            if (letter == playerEnter) {
-                return true;
-            }
-        }
-        return false;
+        return encodedWord.get().contains(playerEnter);
     }
 
     public boolean checkDuplicateEnteredLetters(char playerEnter) {
-        if(player.getEnteredLetters().isEmpty()) {
-            return true;
-        } else return isDuplicateLetter(playerEnter);
+        return !player.getEnteredLetters().contains(playerEnter);
     }
 
-    private boolean isDuplicateLetter (char playerEnter) {
-        for (char letter : player.getEnteredLetters()) {
-            if (playerEnter == letter) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

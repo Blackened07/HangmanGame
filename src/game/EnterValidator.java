@@ -25,7 +25,7 @@ public class EnterValidator {
         try {
             if (playerEnter.isEmpty()) {
                 throw new InvalidCommandException(NOTHING_INPUT_MESSAGE);
-            } else if (isRussian(playerEnter)) {
+            } else if (!isRussian(playerEnter)) {
                 throw new InvalidCommandException(ENG_LETTER_ENTERED);
             } else if (isMoreThanOneLetter(playerEnter)) {
                 if (isStartGameCommand(playerEnter)) {
@@ -43,7 +43,7 @@ public class EnterValidator {
     }
 
     private boolean isRussian(String playerEnter) {
-        return playerEnter.replaceAll(RUS_PATTERN, "").equals(playerEnter);
+        return !playerEnter.replaceAll(RUS_PATTERN, "").equals(playerEnter);
     }
 
     private boolean isMoreThanOneLetter(String playerEnter) {

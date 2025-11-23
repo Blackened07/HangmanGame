@@ -27,11 +27,11 @@ public class Dictionary {
 
     private void isDictionaryFileExist(boolean isExist) {
         if (isExist) {
-            loadWords();
+            load();
         }
     }
 
-    private void loadWords() {
+    private void load() {
         try (BufferedReader fileReader = new BufferedReader(new FileReader(DICTIONARY_PATH))) {
             String line;
             while ((line = fileReader.readLine()) != null) {

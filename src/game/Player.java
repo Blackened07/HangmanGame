@@ -41,18 +41,8 @@ public class Player {
     }
 
     private void addLetterToList() {
-        if (isLetterInList()) {
+        if (!enteredLetters.contains(enteredLetter))
             enteredLetters.add(enteredLetter);
-        }
-    }
-
-    private boolean isLetterInList() {
-        for (char letter : enteredLetters) {
-            if (letter == enteredLetter) {
-                return false;
-            }
-        }
-        return true;
     }
 
 }

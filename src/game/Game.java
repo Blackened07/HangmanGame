@@ -68,7 +68,7 @@ public class Game {
 
             if (enterValidator.isCommandOrLetter(playerEnter)) {
 
-                char letter = getPlayerEnterToChar(playerEnter);
+                char letter = playerEnter.charAt(0);
 
                 if (isPlayerEnterNotDuplicate(letter)) {
 
@@ -120,10 +120,6 @@ public class Game {
         } else {
             startPreGame();
         }
-    }
-
-    private char getPlayerEnterToChar(String playerEnter) {
-        return playerEnter.charAt(0);
     }
 
     private void setPlayerEnter(String playerEnter) {
