@@ -1,5 +1,7 @@
 package game;
 
+import game.storages.PictureStorage;
+
 public class Printer {
     private final PictureStorage pictureStorage;
     private final EncodedWord encodedWord;

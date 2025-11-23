@@ -1,5 +1,8 @@
 package game;
 
+import game.storages.Dictionary;
+import game.storages.PictureStorage;
+
 public class Game {
     private Player player;
     private EncodedWordChecker encodedWordChecker;
@@ -7,7 +10,7 @@ public class Game {
     private Printer printer;
     private final EnterValidator enterValidator;
     private final PictureStorage pictures;
-    private final RandomWordGenerator randomWordGenerator;
+    private final Dictionary dictionary;
     private final int attemptsNumber;
     private boolean isGameOn;
 
@@ -16,10 +19,10 @@ public class Game {
 
     private String playerEnter;
 
-    public Game(PictureStorage pictures, RandomWordGenerator randomWordGenerator) {
+    public Game(PictureStorage pictures, Dictionary dictionary) {
         this.pictures = pictures;
-        this.randomWordGenerator = randomWordGenerator;
-        this.attemptsNumber = pictures.getList().size();
+        this.dictionary = dictionary;
+        this.attemptsNumber = pictures.getListSize();
         this.player = new Player();
         this.enterValidator = new EnterValidator();
     }
@@ -55,7 +58,7 @@ public class Game {
 
     private void setStartSettings() {
         this.player = new Player();
-        this.encodedWord = new EncodedWord(randomWordGenerator.getWord());
+        this.encodedWord = new EncodedWord(dictionary.getRandomWord());
         this.encodedWordChecker = new EncodedWordChecker(encodedWord, player);
         this.printer = new Printer(pictures, encodedWord);
     }

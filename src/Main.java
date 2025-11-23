@@ -1,4 +1,8 @@
 import game.*;
+import game.storages.Dictionary;
+import game.storages.PictureStorage;
+
+import java.io.IOException;
 
 public class Main {
 
@@ -14,13 +18,12 @@ public class Main {
             Желаю вам приятной игры!
             """;
 
-    public static void main(String[] args) {
-
-        Dictionary dictionary = new Dictionary(GameFileReader.getDictionary());
-        PictureStorage pictureStorage = new PictureStorage(GameFileReader.getPictures());
-        RandomWordGenerator randomWordGenerator = new RandomWordGenerator(dictionary);
+    public static void main(String[] args) throws IOException {
+        GameFileInspector gameFileReader = new GameFileInspector();
+        Dictionary dictionary = new Dictionary(gameFileReader);
+        PictureStorage pictureStorage = new PictureStorage(gameFileReader);
         System.out.println(INTRODUCE);
-        Game game = new Game(pictureStorage, randomWordGenerator);
+        Game game = new Game(pictureStorage, dictionary);
         game.startPreGame();
     }
 }
