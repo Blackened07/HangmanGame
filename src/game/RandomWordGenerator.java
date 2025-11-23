@@ -11,7 +11,7 @@ public class RandomWordGenerator {
         this.random = new Random();
     }
 
-    public String chooseTheRandomWord() {
+    public String getWord() {
         int wordsNumbers = dictionary.get().size();
 
         return dictionary.get().stream().toList().get(random.nextInt(wordsNumbers));

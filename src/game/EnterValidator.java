@@ -1,9 +1,9 @@
 package game;
 
 public class EnterValidator {
-    private static final String START_GAME = "старт";
-    private final String RESTART_GAME = "рестарт";
-    private final String EXIT_GAME = "выход";
+    public final String START_GAME = "старт";
+    public final String RESTART_GAME = "рестарт";
+    public final String EXIT_GAME = "выход";
 
     private static final String NOTHING_INPUT_MESSAGE = "Вы ничего не ввели, пожалуйста введите русскую букву";
     private static final String RUS_PATTERN = "[а-яёА-ЯЁ]";
@@ -11,18 +11,6 @@ public class EnterValidator {
     private static final String MORE_THAN_ONE_LETTER = "Вы ввели больше одной буквы, пожалуйста введите русскую букву";
 
     public EnterValidator() {
-    }
-
-    public String getSTART_GAME() {
-        return START_GAME;
-    }
-
-    public String getRESTART_GAME() {
-        return RESTART_GAME;
-    }
-
-    public String getEXIT_GAME() {
-        return EXIT_GAME;
     }
 
     public boolean isPlayerEnterValid(String playerEnter) {

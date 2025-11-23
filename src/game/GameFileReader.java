@@ -3,9 +3,6 @@ package game;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +11,8 @@ import java.util.Set;
 public class GameFileReader {
     private static final String DICTIONARY_PATH = "C:\\Users\\black\\IdeaProjects\\Hangman\\resources\\russian_Words.txt";
     private static final String PICTURES_PATH = "C:\\Users\\black\\IdeaProjects\\Hangman\\resources\\pics.txt";
+    private static final String HYPHEN = "-";
+    private static final String SEPARATOR = "#";
 
     private static final Set<String> dictionary = new HashSet<>();
     private static final List<String> pictures = new ArrayList<>();
@@ -56,8 +55,10 @@ public class GameFileReader {
 
         while ((line = reader.readLine()) != null) {
             if (!line.isEmpty()) {
-                assert false;
-                dictionary.add(line);
+                if (!line.contains(HYPHEN)) {
+                    assert false;
+                    dictionary.add(line);
+                }
             }
         }
     }
@@ -68,8 +69,7 @@ public class GameFileReader {
         String pic;
 
         while ((pic = reader.readLine()) != null) {
-            String separator = "#";
-            if (!pic.equals(separator)) {
+            if (!pic.equals(SEPARATOR)) {
                 symbolicPics.append(pic).append("\n");
             } else {
                 assert false;
@@ -77,18 +77,6 @@ public class GameFileReader {
                 symbolicPics.delete(0, symbolicPics.length());
             }
         }
-    }
-
-    private static boolean isExist() {
-        Path path1 = Paths.get(DICTIONARY_PATH);
-        Path path2 = Paths.get(PICTURES_PATH);
-        try {
-            return Files.exists(path1) && Files.exists(path2);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return true;
     }
 
 }

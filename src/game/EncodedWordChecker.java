@@ -20,8 +20,6 @@ public class EncodedWordChecker {
         return code == EMPTY_SLOT;
     }
 
-    ;
-
     public boolean checkLettersWithPlayerEnter(char playerEnter) {
         for (char letter : encodedWord.get()) {
             if (letter == playerEnter) {
@@ -31,13 +29,13 @@ public class EncodedWordChecker {
         return false;
     }
 
-    public boolean checkDoubleEnteredLetters(char playerEnter) {
+    public boolean checkDuplicateEnteredLetters(char playerEnter) {
         if(player.getEnteredLetters().isEmpty()) {
             return true;
-        } else return isSameLetter(playerEnter);
+        } else return isDuplicateLetter(playerEnter);
     }
 
-    private boolean isSameLetter (char playerEnter) {
+    private boolean isDuplicateLetter (char playerEnter) {
         for (char letter : player.getEnteredLetters()) {
             if (playerEnter == letter) {
                 return false;

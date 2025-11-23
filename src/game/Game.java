@@ -21,7 +21,7 @@ public class Game {
         this.enterValidator = new EnterValidator();
     }
 
-    public void startGameValidate() {
+    public void startPreGame() {
         System.out.println(Printer.FOR_START_GAME_MESSAGE);
         while (!isGameOn) {
             if (enterValidator.isPlayerEnterValid(takePlayerEnter())) {
@@ -34,10 +34,8 @@ public class Game {
     }
 
     public void startGame() {
-        this.player = new Player();
-        this.encodedWord = new EncodedWord(randomWordGenerator.chooseTheRandomWord());
-        this.encodedWordChecker = new EncodedWordChecker(encodedWord, player);
-        this.renderer = new Printer(pictures, encodedWord);
+
+        setStartSettings();
 
         System.out.println(Printer.START_GAME_MESSAGE);
         System.out.println(Printer.ENCODED_LETTERS_NUM + encodedWord.getMaskSize());
@@ -47,67 +45,75 @@ public class Game {
             System.out.println(Printer.ATTEMPTS_COUNT + (attemptsNumber - player.getCount()));
             renderer.renderMask();
             System.out.println(Printer.ENTER_THE_LETTER);
-            if (enterValidator.isPlayerEnterValid(takePlayerEnter())) {
 
-                if (enterValidator.isCommandOrLetter(playerEnter)) {
+            checkGameProcess();
+        }
+    }
 
-                    char letter = getPlayerEnterToChar(playerEnter);
+    private void setStartSettings() {
+        this.player = new Player();
+        this.encodedWord = new EncodedWord(randomWordGenerator.getWord());
+        this.encodedWordChecker = new EncodedWordChecker(encodedWord, player);
+        this.renderer = new Printer(pictures, encodedWord);
+    }
 
-                    if (isPlayerEnterNotDouble(letter)) {
+    private void checkGameProcess() {
+        if (enterValidator.isPlayerEnterValid(takePlayerEnter())) {
 
-                        player.setEnteredLetter(letter);
-                        if (comparePlayerEnterWithEncodedWordsLetters(letter)) {
-                            replaceEncodedToLetter(letter);
-                            System.out.println(Printer.RIGHT_ATTEMPT + player.getEnteredLetter());
+            if (enterValidator.isCommandOrLetter(playerEnter)) {
 
-                            if (encodedWordChecker.isWin()) {
-                                System.out.println(Printer.WIN_MESSAGE + Printer.ENCODED_WORD_MESSAGE + encodedWord.get());
-                                isGameOn = false;
-                                startGameValidate();
-                            }
-                        } else {
+                char letter = getPlayerEnterToChar(playerEnter);
 
-                            System.out.println(Printer.WRONG_ATTEMPT);
-                            renderer.renderHangman(player.getCount());
-                            player.setCount();
+                if (isPlayerEnterNotDuplicate(letter)) {
 
-                            if (isCountToLose()) {
-                                System.out.println(Printer.LOSE_MESSAGE + Printer.ENCODED_WORD_MESSAGE + encodedWord.get());
-                                isGameOn = false;
-                                startGameValidate();
-                            }
+                    player.setEnteredLetter(letter);
+                    if (comparePlayerEnterWithEncodedWordsLetters(letter)) {
+                        replaceEncodedToLetter(letter);
+                        System.out.println(Printer.RIGHT_ATTEMPT + player.getEnteredLetter());
+
+                        if (encodedWordChecker.isWin()) {
+                            System.out.printf("%s %s %s\n", Printer.WIN_MESSAGE, Printer.ENCODED_WORD_MESSAGE, encodedWord.get());
+                            isGameOn = false;
+                            startPreGame();
                         }
                     } else {
-                        System.out.println(Printer.REPEAT_MESSAGE);
+
+                        System.out.println(Printer.WRONG_ATTEMPT);
+                        renderer.renderHangman(player.getCount());
+                        player.setCount();
+
+                        if (isCountToLose()) {
+                            System.out.printf("%s %s %s\n", Printer.LOSE_MESSAGE, Printer.ENCODED_WORD_MESSAGE, encodedWord.get());
+                            isGameOn = false;
+                            startPreGame();
+                        }
                     }
                 } else {
-                    setGameOrExit();
+                    System.out.println(Printer.REPEAT_MESSAGE);
                 }
+            } else {
+                setGameOrExit();
             }
         }
     }
 
     private void setGameOrExit() {
 
-        if (playerEnter.equals(enterValidator.getEXIT_GAME())) {
+        if (playerEnter.equals(enterValidator.EXIT_GAME)) {
             exitGame();
-        } else if (playerEnter.equals(enterValidator.getSTART_GAME()) && !isGameOn) {
+        } else if (playerEnter.equals(enterValidator.START_GAME) && !isGameOn) {
             isGameOn = true;
             startGame();
-        } else if (playerEnter.equals(enterValidator.getRESTART_GAME()) && isGameOn) {
+        } else if (playerEnter.equals(enterValidator.RESTART_GAME) && isGameOn) {
             startGame();
-        } else if (playerEnter.equals(enterValidator.getSTART_GAME()) && isGameOn) {
+        } else if (playerEnter.equals(enterValidator.START_GAME) && isGameOn) {
             System.out.println(Printer.GAME_IS_ON);
-        } else if (playerEnter.equals(enterValidator.getRESTART_GAME()) && !isGameOn) {
+        } else if (playerEnter.equals(enterValidator.RESTART_GAME) && !isGameOn) {
             System.out.println(Printer.GAME_IS_WAITING);
-            startGameValidate();
+            startPreGame();
         } else {
-            startGameValidate();
+            startPreGame();
         }
-    }
-
-    private void exitGame() {
-        isGameOn = !isGameOn;
     }
 
     private char getPlayerEnterToChar(String playerEnter) {
@@ -122,8 +128,8 @@ public class Game {
         return encodedWordChecker.checkLettersWithPlayerEnter(playerEnter);
     }
 
-    private boolean isPlayerEnterNotDouble(char playerEnter) {
-        return encodedWordChecker.checkDoubleEnteredLetters(playerEnter);
+    private boolean isPlayerEnterNotDuplicate(char playerEnter) {
+        return encodedWordChecker.checkDuplicateEnteredLetters(playerEnter);
     }
 
     private void replaceEncodedToLetter(char playerEnter) {
@@ -142,5 +148,9 @@ public class Game {
 
     private boolean isCountToLose() {
         return player.getCount() == attemptsNumber;
+    }
+
+    private void exitGame() {
+        isGameOn = !isGameOn;
     }
 }

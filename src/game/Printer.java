@@ -1,8 +1,8 @@
 package game;
 
 public class Printer {
-    private PictureStorage pictureStorage;
-    private EncodedWord encodedWord;
+    private final PictureStorage pictureStorage;
+    private final EncodedWord encodedWord;
 
     static final String START_GAME_MESSAGE = "Игра Началась!!!";
     static final String WIN_MESSAGE = "ВЫ ПОБЕДИЛИ!!!";

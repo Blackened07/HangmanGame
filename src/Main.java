@@ -2,7 +2,7 @@ import game.*;
 
 public class Main {
 
-    private final static String introduce = """
+    private final static String INTRODUCE = """
             Добро пожаловать в игру "Виселица"
             
             После начала игры будет загадано слово которое вам нужно отгадать
@@ -19,8 +19,8 @@ public class Main {
         Dictionary dictionary = new Dictionary(GameFileReader.getDictionary());
         PictureStorage pictureStorage = new PictureStorage(GameFileReader.getPictures());
         RandomWordGenerator randomWordGenerator = new RandomWordGenerator(dictionary);
-        System.out.println(introduce);
+        System.out.println(INTRODUCE);
         Game game = new Game(pictureStorage, randomWordGenerator);
-        game.startGameValidate();
+        game.startPreGame();
     }
 }
