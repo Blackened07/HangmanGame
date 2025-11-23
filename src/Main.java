@@ -19,9 +19,9 @@ public class Main {
             """;
 
     public static void main(String[] args) throws IOException {
-        GameFileInspector gameFileReader = new GameFileInspector();
-        Dictionary dictionary = new Dictionary(gameFileReader);
-        PictureStorage pictureStorage = new PictureStorage(gameFileReader);
+
+        Dictionary dictionary = new Dictionary();
+        PictureStorage pictureStorage = new PictureStorage();
         System.out.println(INTRODUCE);
         Game game = new Game(pictureStorage, dictionary);
         game.startPreGame();

@@ -1,8 +1,7 @@
 package game.storages;
 
-import game.GameFileInspector;
-
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,9 +11,9 @@ public class PictureStorage {
     private final List<String> pictures;
     String PICTURES_PATH = "C:\\Users\\black\\IdeaProjects\\Hangman\\resources\\pics.txt";
 
-    public PictureStorage(GameFileInspector gameFileReader) throws IOException {
+    public PictureStorage() {
         pictures = new ArrayList<>();
-        isStorageFileExist(gameFileReader.isFileExist(PICTURES_PATH));
+        load();
     }
 
     public String get(int index) {
@@ -25,9 +24,18 @@ public class PictureStorage {
         return pictures.size();
     }
 
-    private void isStorageFileExist(boolean isExist) {
-        if (isExist) {
-            loadPictures();
+    private void load() {
+        File file = new File(PICTURES_PATH);
+        try {
+            if (file.exists()) {
+                loadPictures();
+            } else {
+                throw new IOException("Файл " + file.getName() + " не найден!");
+            }
+        } catch (IOException e) {
+            String loadingError = ". Работа программы будет завершена!";
+            System.out.println(e.getMessage() + loadingError);
+            System.exit(0);
         }
     }
 
@@ -50,4 +58,5 @@ public class PictureStorage {
             System.out.println(e.getMessage());
         }
     }
+
 }

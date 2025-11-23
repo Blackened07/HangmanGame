@@ -1,8 +1,7 @@
 package game.storages;
 
-import game.GameFileInspector;
-
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
@@ -13,25 +12,33 @@ public class Dictionary {
     private final Set<String> dictionary;
     String DICTIONARY_PATH = "C:\\Users\\black\\IdeaProjects\\Hangman\\resources\\russian_Words.txt";
 
-    public Dictionary(GameFileInspector gameFileReader) throws IOException {
+    public Dictionary() {
         this.dictionary = new HashSet<>();
-        isDictionaryFileExist(gameFileReader.isFileExist(DICTIONARY_PATH));
+        load();
     }
 
     public String getRandomWord() {
         Random random = new Random();
         int wordsNumbers = dictionary.size();
-
         return dictionary.stream().toList().get(random.nextInt(wordsNumbers));
     }
 
-    private void isDictionaryFileExist(boolean isExist) {
-        if (isExist) {
-            load();
+    public void load() {
+        File file = new File(DICTIONARY_PATH);
+        try {
+            if (file.exists()) {
+                loadDictionary();
+            } else {
+                throw new IOException("Файл " + file.getName() + " не найден!");
+            }
+        } catch (IOException e) {
+            String loadingError = ". Работа программы будет завершена!";
+            System.out.println(e.getMessage() + loadingError);
+            System.exit(0);
         }
     }
 
-    private void load() {
+    private void loadDictionary() {
         try (BufferedReader fileReader = new BufferedReader(new FileReader(DICTIONARY_PATH))) {
             String line;
             while ((line = fileReader.readLine()) != null) {
@@ -43,8 +50,9 @@ public class Dictionary {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
+
 }
