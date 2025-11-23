@@ -11,6 +11,7 @@ import java.util.Set;
 public class GameFileReader {
     private static final String DICTIONARY_PATH = "C:\\Users\\black\\IdeaProjects\\Hangman\\resources\\russian_Words.txt";
     private static final String PICTURES_PATH = "C:\\Users\\black\\IdeaProjects\\Hangman\\resources\\pics.txt";
+    private static final String LOADING_ERROR = ". Работа программы будет завершена!";
     private static final String HYPHEN = "-";
     private static final String SEPARATOR = "#";
 
@@ -43,7 +44,7 @@ public class GameFileReader {
                     default -> throw new IOException();
                 }
             } catch (IOException e) {
-                System.out.println(e.getMessage() + ". Работа программы будет завершена!");
+                System.out.println(e.getMessage() + LOADING_ERROR);
                 System.exit(0);
             }
         }
