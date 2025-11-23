@@ -4,12 +4,15 @@ public class Game {
     private Player player;
     private EncodedWordChecker encodedWordChecker;
     private EncodedWord encodedWord;
-    private Printer renderer;
+    private Printer printer;
     private final EnterValidator enterValidator;
     private final PictureStorage pictures;
     private final RandomWordGenerator randomWordGenerator;
     private final int attemptsNumber;
     private boolean isGameOn;
+
+    private final String FOR_START_GAME_MESSAGE = "Для начала игры введите команду Старт." +
+            "\nЕсли хотите выйти введите Выход\nДля перезапуска активной игры введите команду Рестарт";
 
     private String playerEnter;
 
@@ -22,7 +25,7 @@ public class Game {
     }
 
     public void startPreGame() {
-        System.out.println(Printer.FOR_START_GAME_MESSAGE);
+        System.out.println(FOR_START_GAME_MESSAGE);
         while (!isGameOn) {
             if (enterValidator.isPlayerEnterValid(takePlayerEnter())) {
                 if (!enterValidator.isCommandOrLetter(playerEnter)) {
@@ -37,14 +40,14 @@ public class Game {
 
         setStartSettings();
 
-        System.out.println(Printer.START_GAME_MESSAGE);
-        System.out.println(Printer.ENCODED_LETTERS_NUM + encodedWord.getMaskSize());
+        System.out.println(printer.START_GAME_MESSAGE);
+        System.out.println(printer.ENCODED_LETTERS_NUM + encodedWord.getMaskSize());
 
         while (isGameOn) {
-            System.out.println(Printer.EXIST_LETTER + player.getEnteredLetters());
-            System.out.println(Printer.ATTEMPTS_COUNT + (attemptsNumber - player.getCount()));
-            renderer.renderMask();
-            System.out.println(Printer.ENTER_THE_LETTER);
+            System.out.println(printer.EXIST_LETTER + player.getEnteredLetters());
+            System.out.println(printer.ATTEMPTS_COUNT + (attemptsNumber - player.getCount()));
+            printer.renderMask();
+            System.out.println(printer.ENTER_THE_LETTER);
 
             checkGameProcess();
         }
@@ -54,7 +57,7 @@ public class Game {
         this.player = new Player();
         this.encodedWord = new EncodedWord(randomWordGenerator.getWord());
         this.encodedWordChecker = new EncodedWordChecker(encodedWord, player);
-        this.renderer = new Printer(pictures, encodedWord);
+        this.printer = new Printer(pictures, encodedWord);
     }
 
     private void checkGameProcess() {
@@ -69,27 +72,27 @@ public class Game {
                     player.setEnteredLetter(letter);
                     if (comparePlayerEnterWithEncodedWordsLetters(letter)) {
                         replaceEncodedToLetter(letter);
-                        System.out.println(Printer.RIGHT_ATTEMPT + player.getEnteredLetter());
+                        System.out.println(printer.RIGHT_ATTEMPT + player.getEnteredLetter());
 
                         if (encodedWordChecker.isWin()) {
-                            System.out.printf("%s %s %s\n", Printer.WIN_MESSAGE, Printer.ENCODED_WORD_MESSAGE, encodedWord.get());
+                            System.out.printf("%s %s %s\n", printer.WIN_MESSAGE, printer.ENCODED_WORD_MESSAGE, encodedWord.get());
                             isGameOn = false;
                             startPreGame();
                         }
                     } else {
 
-                        System.out.println(Printer.WRONG_ATTEMPT);
-                        renderer.renderHangman(player.getCount());
+                        System.out.println(printer.WRONG_ATTEMPT);
+                        printer.renderHangman(player.getCount());
                         player.setCount();
 
                         if (isCountToLose()) {
-                            System.out.printf("%s %s %s\n", Printer.LOSE_MESSAGE, Printer.ENCODED_WORD_MESSAGE, encodedWord.get());
+                            System.out.printf("%s %s %s\n", printer.LOSE_MESSAGE, printer.ENCODED_WORD_MESSAGE, encodedWord.get());
                             isGameOn = false;
                             startPreGame();
                         }
                     }
                 } else {
-                    System.out.println(Printer.REPEAT_MESSAGE);
+                    System.out.println(printer.REPEAT_MESSAGE);
                 }
             } else {
                 setGameOrExit();
@@ -107,9 +110,9 @@ public class Game {
         } else if (playerEnter.equals(enterValidator.RESTART_GAME) && isGameOn) {
             startGame();
         } else if (playerEnter.equals(enterValidator.START_GAME) && isGameOn) {
-            System.out.println(Printer.GAME_IS_ON);
+            System.out.println(printer.GAME_IS_ON);
         } else if (playerEnter.equals(enterValidator.RESTART_GAME) && !isGameOn) {
-            System.out.println(Printer.GAME_IS_WAITING);
+            System.out.println(printer.GAME_IS_WAITING);
             startPreGame();
         } else {
             startPreGame();
