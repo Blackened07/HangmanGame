@@ -19,7 +19,7 @@ import static game.validator.GameCommands.START_GAME;
 
 public class UserInterface {
 
-    private static final String DICTIONARY_PATH =  PropertiesUtil.get(Paths.DICTIONARY_PATH_KEY.getPath());
+    private static final String DICTIONARY_PATH = PropertiesUtil.get(Paths.DICTIONARY_PATH_KEY.getPath());
 
     private final EnterValidator enterValidator;
     private final Printer printer;
@@ -40,6 +40,7 @@ public class UserInterface {
         this.scanner = new Scanner(System.in);
         this.isGameOn = false;
         this.dictionary = new Dictionary(dictionaryLoad);
+        isDictionaryNotEmpty(dictionaryLoad);
     }
 
     public void startPreGame() {
@@ -57,7 +58,9 @@ public class UserInterface {
 
     public void setGameOrExit() {
 
-        if (playerEnter.equals(EXIT_GAME.getCommand())) {
+        if (playerEnter.equals(EXIT_GAME.getCommand()) && isGameOn) {
+            stopGame();
+        } else if (playerEnter.equals(EXIT_GAME.getCommand()) && !isGameOn) {
             exitGame();
         } else if (playerEnter.equals(START_GAME.getCommand()) && !isGameOn) {
             isGameOn = true;
@@ -89,7 +92,7 @@ public class UserInterface {
     }
 
     public boolean getPlayerEnterValid() {
-       return enterValidator.isPlayerEnterValid(takePlayerEnter(), isGameOn);
+        return enterValidator.isPlayerEnterValid(takePlayerEnter(), isGameOn);
     }
 
     public boolean getIsCommand() {
@@ -117,10 +120,10 @@ public class UserInterface {
                 printer.renderMessage(printer.WRONG_ATTEMPT);
             }
             case WIN -> {
-               printer.renderMessage(printer.WIN_MESSAGE + printer.ENCODED_WORD_MESSAGE + message + "\n");
+                printer.renderMessage(printer.WIN_MESSAGE + printer.ENCODED_WORD_MESSAGE + message + "\n");
             }
             case LOSE -> {
-               printer.renderMessage(printer.LOSE_MESSAGE + printer.ENCODED_WORD_MESSAGE + message + "\n");
+                printer.renderMessage(printer.LOSE_MESSAGE + printer.ENCODED_WORD_MESSAGE + message + "\n");
             }
             case REPEAT -> {
                 printer.renderMessage(printer.DUPLICATE_MESSAGE);
@@ -147,7 +150,18 @@ public class UserInterface {
         game.startGame();
     }
 
-    private void exitGame() {
+    private void isDictionaryNotEmpty(List<String> dictionaryLoad) {
+        if (dictionaryLoad.isEmpty()) {
+            exitGame();
+        }
+    }
+
+    private void stopGame() {
         isGameOn = !isGameOn;
+    }
+
+    private void exitGame() {
+        printer.renderMessage(printer.EXIT_GAME);
+        System.exit(0);
     }
 }

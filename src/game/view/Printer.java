@@ -28,6 +28,7 @@ public class Printer {
     public final String WRONG_ATTEMPT = "Нет такой буквы!";
     public final String GAME_IS_ON = "Игра в процессе";
     public final String GAME_IS_WAITING = "Игра не запущена, нечего перезапускать";
+    public final String EXIT_GAME = "Игра завершена";
 
     public Printer() {
         List<String> picturesLoad = FileLoader.loadFile(
@@ -35,7 +36,7 @@ public class Printer {
                 PicturesLoader::loadPictures);
 
        this.pictureStorage = new PictureStorage(picturesLoad);
-
+       checkPictureIsNotEmpty(picturesLoad);
     }
 
     public void renderMessage(String text) {
@@ -56,6 +57,13 @@ public class Printer {
 
     private String getPicture(int count) {
         return pictureStorage.get(count);
+    }
+
+    private void checkPictureIsNotEmpty(List<String> picturesLoad) {
+        if (picturesLoad.isEmpty()) {
+            renderMessage(EXIT_GAME);
+            System.exit(0);
+        }
     }
 
 }
