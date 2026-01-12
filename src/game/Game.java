@@ -126,7 +126,7 @@ public class Game {
         }
     }
 
-    public boolean isWin() {
+    private boolean isWin() {
         char code = EMPTY_SLOT;
         for (char letter : encodedWord.getMask()) {
             if (letter == encodedWord.getCODE()) {
