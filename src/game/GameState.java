@@ -6,5 +6,6 @@ public enum GameState {
     WRONG,
     WIN,
     LOSE,
-    REPEAT
+    REPEAT,
+    EVERY_TURN
 }

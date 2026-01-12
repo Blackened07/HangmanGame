@@ -96,7 +96,6 @@ public class UserInterface {
     }
 
     public boolean getIsCommand() {
-
         return enterValidator.isCommand(playerEnter);
     }
 
@@ -105,28 +104,31 @@ public class UserInterface {
     }
 
     public void callPrinterToViewEveryTurnGameMessage() {
-        printer.renderMessage(printer.EXIST_LETTER + game.getEnteredLetters());
-        printer.renderMessage(printer.ATTEMPTS_COUNT + (ATTEMPTS_NUMBER - game.getCount()));
-        printer.renderMask(game.getEncodedWordMask());
-        printer.renderMessage(printer.ENTER_THE_LETTER);
+
     }
 
-    public void callPrinterToViewStateGameMessage(GameState state, String message) {
+    public void callPrinterToViewStateGameMessage(GameState state, String... message) {
         switch (state) {
             case RIGHT -> {
-                printer.renderMessage(printer.RIGHT_ATTEMPT + message);
+                printer.renderMessage(printer.RIGHT_ATTEMPT + message[0]);
             }
             case WRONG -> {
                 printer.renderMessage(printer.WRONG_ATTEMPT);
             }
             case WIN -> {
-                printer.renderMessage(printer.WIN_MESSAGE + printer.ENCODED_WORD_MESSAGE + message + "\n");
+                printer.renderMessage(printer.WIN_MESSAGE + printer.ENCODED_WORD_MESSAGE + message[0] + "\n");
             }
             case LOSE -> {
-                printer.renderMessage(printer.LOSE_MESSAGE + printer.ENCODED_WORD_MESSAGE + message + "\n");
+                printer.renderMessage(printer.LOSE_MESSAGE + printer.ENCODED_WORD_MESSAGE + message[0] + "\n");
             }
             case REPEAT -> {
                 printer.renderMessage(printer.DUPLICATE_MESSAGE);
+            }
+            case EVERY_TURN -> {
+                printer.renderMessage(printer.EXIST_LETTER + message[0]);
+                printer.renderMessage(printer.ATTEMPTS_COUNT + message[1]);
+                printer.renderMessage(message[2]);
+                printer.renderMessage(printer.ENTER_THE_LETTER);
             }
         }
     }

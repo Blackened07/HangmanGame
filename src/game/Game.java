@@ -32,19 +32,28 @@ public class Game {
 
     public void startGame() {
         while (UI.getGameOnState()) {
-            UI.callPrinterToViewEveryTurnGameMessage();
+            UI.callPrinterToViewStateGameMessage(
+                    GameState.EVERY_TURN,
+                    getEnteredLetters().toString(),
+                    String.valueOf(ATTEMPTS_NUMBER - getCount()),
+                    getEncodedWordMask().toString()
+            );
             checkGameProcess();
         }
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public List<Character> getEnteredLetters() {
+        return enteredLetters;
+    }
+
     private void checkGameProcess() {
-
         if (UI.getPlayerEnterValid()) {
-
             if (!UI.getIsCommand()) {
-
                 char letter = UI.getPlayerEnter();
-
                 if (isPlayerEnterNotDuplicate(letter)) {
                     setEnteredLetter(letter);
                     checkWhenPlayerEnterNotDuplicate(letter);
@@ -57,33 +66,19 @@ public class Game {
         }
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public List<Character> getEnteredLetters() {
-        return enteredLetters;
-    }
-
     private void checkWhenPlayerEnterNotDuplicate(char letter) {
         if (isPlayerEnterEqualsEncodedWordLetters(letter)) {
-
             replaceEncodedToLetter(letter);
-
             UI.callPrinterToViewStateGameMessage(GameState.RIGHT, String.valueOf(getEnteredLetter()));
-
             if (isWin()) {
                 UI.callPrinterToViewStateGameMessage(GameState.WIN, encodedWord.get().toString());
                 UI.setGameOn(false);
                 UI.startPreGame();
             }
-
         } else {
-
             UI.callPrinterToViewStateGameMessage(GameState.WRONG, "");
             UI.printHangman(getCount());
             setCount();
-
             if (isCountToLose()) {
                 UI.callPrinterToViewStateGameMessage(GameState.LOSE, encodedWord.get().toString());
                 UI.setGameOn(false);

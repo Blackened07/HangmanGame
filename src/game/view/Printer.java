@@ -47,14 +47,6 @@ public class Printer {
         System.out.println(getPicture(count));
     }
 
-    public void renderMask(List<Character> mask) {
-        System.out.println(getMask(mask));
-    }
-
-    private String getMask(List<Character> mask) {
-        return mask.toString();
-    }
-
     private String getPicture(int count) {
         return pictureStorage.get(count);
     }
