@@ -1,8 +1,10 @@
 import game.*;
+import game.downloader.*;
 import game.storages.Dictionary;
 import game.storages.PictureStorage;
+import game.view.UserInterface;
 
-import java.io.IOException;
+import java.util.List;
 
 public class Main {
 
@@ -18,12 +20,12 @@ public class Main {
             Желаю вам приятной игры!
             """;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        Dictionary dictionary = new Dictionary();
-        PictureStorage pictureStorage = new PictureStorage();
         System.out.println(INTRODUCE);
-        Game game = new Game(pictureStorage, dictionary);
-        game.startPreGame();
+
+        UserInterface us = new UserInterface();
+        us.startPreGame();
+
     }
 }
