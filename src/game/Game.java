@@ -41,7 +41,7 @@ public class Game {
 
         if (UI.getPlayerEnterValid()) {
 
-            if (UI.getIsCommand()) {
+            if (!UI.getIsCommand()) {
 
                 char letter = UI.getPlayerEnter();
 

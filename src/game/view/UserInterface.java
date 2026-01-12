@@ -47,7 +47,7 @@ public class UserInterface {
 
         while (!isGameOn) {
             if (enterValidator.isPlayerEnterValid(takePlayerEnter(), isGameOn)) {
-                if (!enterValidator.isCommandOrLetter(playerEnter)) {
+                if (enterValidator.isCommand(playerEnter)) {
                     setGameOrExit();
                     break;
                 }
@@ -93,7 +93,8 @@ public class UserInterface {
     }
 
     public boolean getIsCommand() {
-        return enterValidator.isCommandOrLetter(playerEnter);
+
+        return enterValidator.isCommand(playerEnter);
     }
 
     public String getRandomWord() {

@@ -1,10 +1,5 @@
-import game.*;
-import game.downloader.*;
-import game.storages.Dictionary;
-import game.storages.PictureStorage;
-import game.view.UserInterface;
 
-import java.util.List;
+import game.view.UserInterface;
 
 public class Main {
 

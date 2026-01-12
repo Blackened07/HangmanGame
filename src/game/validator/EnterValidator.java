@@ -19,7 +19,7 @@ public class EnterValidator {
         return isValid(playerEnter, isGameOn);
     }
 
-    public boolean isCommandOrLetter(String playerEnter) {
+    public boolean isCommand(String playerEnter) {
         return isStartGameCommand(playerEnter);
     }
 
@@ -30,9 +30,7 @@ public class EnterValidator {
             } else if (playerEnter.isEmpty() && isGameOn) {
                 throw new InvalidCommandException(NOTHING_INPUT_MESSAGE_ON_GAME_ON);
             } else if (isMoreThanOneLetter(playerEnter)) {
-                if (isCommand(playerEnter, isGameOn)) {
-                    return true;
-                };
+                return checkIsCommand(playerEnter, isGameOn);
             } else if (!isRussian(playerEnter) && isGameOn) {
                 throw new InvalidCommandException(ENG_LETTER_ENTERED);
             } else if (isOneLetter(playerEnter) && !isGameOn) {
@@ -58,10 +56,10 @@ public class EnterValidator {
         return playerEnter.length() == 1;
     }
 
-    private boolean isCommand(String playerEnter, boolean isGameOn) throws InvalidCommandException {
-        if (isStartGameCommand(playerEnter) && isGameOn) {
+    private boolean checkIsCommand(String playerEnter, boolean isGameOn) throws InvalidCommandException {
+        if (!isStartGameCommand(playerEnter) && isGameOn) {
             throw new InvalidCommandException(MORE_THAN_ONE_LETTER);
-        } else if (isStartGameCommand(playerEnter) && !isGameOn) {
+        } else if (!isStartGameCommand(playerEnter) && !isGameOn) {
             throw new InvalidCommandException(MORE_THAN_ONE_LETTER_ON_GAME_OFF);
         } else {
             return true;
@@ -69,9 +67,9 @@ public class EnterValidator {
     }
 
     private boolean isStartGameCommand(String playerEnter) {
-        return !playerEnter.equals(START_GAME.getCommand()) &&
-                !playerEnter.equals(RESTART_GAME.getCommand()) &&
-                !playerEnter.equals(EXIT_GAME.getCommand());
+        return playerEnter.equals(START_GAME.getCommand()) ||
+                playerEnter.equals(RESTART_GAME.getCommand()) ||
+                playerEnter.equals(EXIT_GAME.getCommand());
     }
 
 }
