@@ -57,11 +57,6 @@ public class Game {
         addLetterToList();
     }
 
-    private void addLetterToList() {
-        if (!enteredLetters.contains(enteredLetter))
-            enteredLetters.add(enteredLetter);
-    }
-
     public boolean isPlayerEnterEqualsEncodedWordLetters(char playerEnter) {
         return encodedWord.get().contains(playerEnter);
     }
@@ -90,6 +85,11 @@ public class Game {
 
     public boolean isCountToLose() {
         return count == ATTEMPTS_NUMBER;
+    }
+
+    private void addLetterToList() {
+        if (!enteredLetters.contains(enteredLetter))
+            enteredLetters.add(enteredLetter);
     }
 
 }
