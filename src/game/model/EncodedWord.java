@@ -1,4 +1,4 @@
-package game;
+package game.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,4 +46,5 @@ public class EncodedWord {
             encodedWordsMask.add(i, CODE);
         }
     }
+
 }

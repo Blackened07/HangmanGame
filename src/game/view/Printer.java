@@ -26,8 +26,6 @@ public class Printer {
     public final String ENTER_THE_LETTER = "Введите букву";
     public final String RIGHT_ATTEMPT = "Верно! Откройте букву: ";
     public final String WRONG_ATTEMPT = "Нет такой буквы!";
-    public final String GAME_IS_ON = "Игра в процессе";
-    public final String GAME_IS_WAITING = "Игра не запущена, нечего перезапускать";
     public final String EXIT_GAME = "Игра завершена";
 
     public Printer() {
@@ -39,12 +37,47 @@ public class Printer {
        checkPictureIsNotEmpty(picturesLoad);
     }
 
-    public void renderMessage(String text) {
+    public void printMessage(String text) {
         System.out.println(text);
     }
 
-    public void renderHangman(int count) {
+    public void printStartMessage() {
+        System.out.println(FOR_START_GAME_MESSAGE);
+    }
+
+    public void printDuplicateLetterMessage() {
+        System.out.println(DUPLICATE_MESSAGE);
+    }
+
+    public void printHangman(int count) {
         System.out.println(getPicture(count));
+    }
+
+    public void printRoundMessage(String mask, int size, String letters, int attempts) {
+        System.out.printf("%s%s\n", EXIST_LETTER, letters);
+        System.out.printf("%s%d\n", ENCODED_LETTERS_NUM, size);
+        System.out.printf("%s%s\n", ENCODED_WORD_MESSAGE, mask);
+        System.out.printf("%s%d\n", ATTEMPTS_COUNT, attempts);
+        System.out.println(ENTER_THE_LETTER + "\n");
+    }
+
+    public void printRightMessage(char letter) {
+        System.out.printf("%s%s\n", RIGHT_ATTEMPT, letter);
+    }
+
+    public void printWin(String encodedWord) {
+        System.out.println(WIN_MESSAGE);
+        System.out.printf("%s %s\n", ENCODED_WORD_MESSAGE, encodedWord);
+    }
+
+    public void printWrongMessage(char letter) {
+        String upperLetter = String.valueOf(letter).toUpperCase();
+        System.out.printf("%s %s\n", WRONG_ATTEMPT, upperLetter);
+    }
+
+    public void printLose(String encodedWord) {
+        System.out.println(LOSE_MESSAGE);
+        System.out.printf("%s %s\n", ENCODED_WORD_MESSAGE, encodedWord);
     }
 
     private String getPicture(int count) {
@@ -53,9 +86,8 @@ public class Printer {
 
     private void checkPictureIsNotEmpty(List<String> picturesLoad) {
         if (picturesLoad.isEmpty()) {
-            renderMessage(EXIT_GAME);
+            printMessage(EXIT_GAME);
             System.exit(0);
         }
     }
-
 }

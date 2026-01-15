@@ -1,5 +1,10 @@
+import game.Action;
+import game.InputManager;
+import game.handlers.*;
+import game.storages.Dictionary;
+import game.view.Printer;
 
-import game.view.UserInterface;
+import java.util.List;
 
 public class Main {
 
@@ -17,10 +22,23 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Printer printer = new Printer();
+
+        Action action = new Action(Dictionary.getInstance(), printer);
+
+        List<CommandHandler> handlers = List.of(
+                new StartHandler(action),
+                new GameHandler(action),
+                new ExitHandler(action),
+                new InvalidHandler(action)
+        );
+
+        InputManager manager = new InputManager(handlers);
+        action.setManager(manager);
+
         System.out.println(INTRODUCE);
+        printer.printStartMessage();
 
-        UserInterface us = new UserInterface();
-        us.startPreGame();
-
+        manager.mainInputHandler();
     }
 }
