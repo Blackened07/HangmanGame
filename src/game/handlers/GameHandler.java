@@ -2,6 +2,9 @@ package game.handlers;
 
 import game.Action;
 
+import static game.InputValidator.isOneLetter;
+import static game.InputValidator.isRussian;
+
 public class GameHandler extends BaseHandler {
 
     public GameHandler(Action action) {
@@ -9,8 +12,8 @@ public class GameHandler extends BaseHandler {
     }
 
     @Override
-    public boolean canExecute(String input, boolean state) {
-        return isOneLetter(input) && isRussian(input) && state;
+    public boolean canHandle(String input) {
+        return isOneLetter(input) && isRussian(input);
     }
 
     @Override

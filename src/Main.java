@@ -28,13 +28,13 @@ public class Main {
 
         List<CommandHandler> handlers = List.of(
                 new StartHandler(action),
+                new RestartHandler(action),
                 new GameHandler(action),
                 new ExitHandler(action),
                 new InvalidHandler(action)
         );
 
         InputManager manager = new InputManager(handlers);
-        action.setManager(manager);
 
         System.out.println(INTRODUCE);
         printer.printStartMessage();

@@ -1,7 +1,8 @@
 package game.handlers;
 
 import game.Action;
-import game.validator.GameCommands;
+
+import static game.InputValidator.isExitCommand;
 
 public class ExitHandler extends BaseHandler {
 
@@ -10,9 +11,8 @@ public class ExitHandler extends BaseHandler {
     }
 
     @Override
-    public boolean canExecute(String input, boolean state) {
-        return (input.equals(GameCommands.EXIT_GAME.getCommand()) && !state) ||
-                (input.equals(GameCommands.EXIT_GAME.getCommand()) && state);
+    public boolean canHandle(String input) {
+        return isExitCommand(input);
     }
 
     @Override

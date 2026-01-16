@@ -3,21 +3,18 @@ package game.handlers;
 import game.Action;
 import game.InputValidator;
 
-public class StartHandler extends BaseHandler {
-
-    public StartHandler(Action action) {
+public class RestartHandler extends BaseHandler{
+    public RestartHandler(Action action) {
         super(action);
     }
 
     @Override
     public boolean canHandle(String input) {
-        return InputValidator.isStartCommand(input);
+        return InputValidator.isRestartCommand(input);
     }
 
     @Override
     public void handle(String input) {
-
-        getAction().createGame();
-
+        getAction().restartGame();
     }
 }

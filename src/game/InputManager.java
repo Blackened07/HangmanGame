@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class InputManager {
 
     private final Scanner scanner;
-    private boolean isGameOn;
 
     private final List<CommandHandler> handlers;
 
@@ -22,19 +21,12 @@ public class InputManager {
             String playerInput = takePlayerInput();
 
             for (CommandHandler handler : handlers) {
-                if (handler.canExecute(playerInput, isGameOn)) {
+                if (handler.canHandle(playerInput)) {
                     handler.handle(playerInput);
+                    break;
                 }
             }
         }
-    }
-
-    public boolean isGameOn() {
-        return isGameOn;
-    }
-
-    public void setGameOn(boolean gameOn) {
-        isGameOn = gameOn;
     }
 
     private String takePlayerInput() {

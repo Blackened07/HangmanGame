@@ -8,26 +8,36 @@ public class Action {
 
     private final Dictionary dictionary;
     private final Printer printer;
-    private InputManager manager;
     private Game game;
+    private boolean isGameOn;
 
     public Action(Dictionary dictionary, Printer printer) {
         this.dictionary = dictionary;
         this.printer = printer;
     }
 
-    public void setManager (InputManager manager) {
-        this.manager = manager;
+    public void createGame() {
+        if (!isGameOn) {
+            getInstance();
+        } else {
+            printer.printInvalidStart();
+        }
     }
 
-    public void createGame() {
-        game = new Game(dictionary.getRandomWord());
-        manager.setGameOn(true);
-        printer.printMessage(printer.START_GAME_MESSAGE);
-        printer.printRoundMessage(game.getEncodedWordMask(), game.getEncodedWordSize(), game.getEnteredLetters(), Game.ATTEMPTS_NUMBER);
+    public void restartGame() {
+        if (isGameOn) {
+            getInstance();
+        } else {
+            printer.printInvalidRestart();
+        }
     }
 
     public void makeMove(String input) {
+        if (!isGameOn) {
+            printer.printMessage(printer.UNKNOWN_COMMAND);
+            return;
+        }
+
         char letter = getPlayerInputForGameProcess(input);
 
         if (game.isPlayerEnterNotDuplicate(letter)) {
@@ -35,20 +45,39 @@ public class Action {
             checkWhenPlayerInputNotDuplicate(letter);
 
         } else {
-            printer.printDuplicateLetterMessage( );
+            printer.printDuplicateLetterMessage();
             printer.printMessage(game.getEnteredLetters());
         }
 
     }
 
     public void exit() {
-        if (manager.isGameOn()) {
-            manager.setGameOn(false);
+        if (isGameOn()) {
+            setGameOn(false);
             printer.printStartMessage();
         } else {
             printer.printMessage(printer.EXIT_GAME);
             System.exit(0);
         }
+    }
+
+    public void printInvalid(String input) {
+        printer.printInvalid(input, isGameOn);
+    }
+
+    private void getInstance() {
+        game = new Game(dictionary.getRandomWord());
+        setGameOn(true);
+        printer.printMessage(printer.START_GAME_MESSAGE);
+        printer.printRoundMessage(game.getEncodedWordMask(), game.getEncodedWordSize(), game.getEnteredLetters(), Game.ATTEMPTS_NUMBER);
+    }
+
+    private boolean isGameOn() {
+        return isGameOn;
+    }
+
+    private void setGameOn(boolean gameOn) {
+        isGameOn = gameOn;
     }
 
     private void checkWhenPlayerInputNotDuplicate(char letter) {
@@ -88,8 +117,7 @@ public class Action {
     }
 
     private void processEndGame() {
-        manager.setGameOn(false);
+        setGameOn(false);
         printer.printStartMessage();
     }
-
 }

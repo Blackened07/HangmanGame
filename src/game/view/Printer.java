@@ -5,8 +5,11 @@ import game.downloader.Paths;
 import game.downloader.PicturesLoader;
 import game.downloader.PropertiesUtil;
 import game.storages.PictureStorage;
+import game.validator.InvalidCommandException;
 
 import java.util.List;
+
+import static game.InputValidator.*;
 
 public class Printer {
 
@@ -27,6 +30,15 @@ public class Printer {
     public final String RIGHT_ATTEMPT = "Верно! Откройте букву: ";
     public final String WRONG_ATTEMPT = "Нет такой буквы!";
     public final String EXIT_GAME = "Игра завершена";
+
+    public final String NOTHING_INPUT_MESSAGE_ON_GAME_OFF = "Вы ничего не ввели, пожалуйста введите команду";
+    public final String NOTHING_INPUT_MESSAGE_ON_GAME_ON = "Вы ничего не ввели, пожалуйста введите русскую букву";
+    public final String ENG_LETTER_ENTERED = "Вы ввели цифру или букву другого алфавита, пожалуйста введите русскую букву";
+    public final String MORE_THAN_ONE_LETTER = "Вы ввели больше одного символа, пожалуйста введите русскую букву";
+    public final String UNKNOWN_COMMAND = "Неизвестная команда, пожалуйста введите команду";
+    public final String ONE_LETTER_ENTERED_ON_GAME_OFF = "Вы ввели букву, пожалуйста введите команду";
+    public final String GAME_IS_WAITING = "Игра не запущена, нечего перезапускать";
+    public final String GAME_IS_ON = "Игра в процессе";
 
     public Printer() {
         List<String> picturesLoad = FileLoader.loadFile(
@@ -78,6 +90,56 @@ public class Printer {
     public void printLose(String encodedWord) {
         System.out.println(LOSE_MESSAGE);
         System.out.printf("%s %s\n", ENCODED_WORD_MESSAGE, encodedWord);
+    }
+
+    public void printInvalidStart() {
+        System.out.println(GAME_IS_ON);
+    }
+
+    public void printInvalidRestart() {
+        System.out.println(GAME_IS_WAITING);
+    }
+
+    public void printInvalidPreStartLetter() {
+        System.out.println(ONE_LETTER_ENTERED_ON_GAME_OFF);
+    }
+
+    public void printInvalid(String input, boolean state) {
+        try {
+            if (input.isEmpty()) {
+                ifIsEmpty(state);
+            } else if (isMoreThanOneLetter(input)) {
+                ifMoreThanOne(state);
+            } else if (isOneLetter(input)) {
+                ifOne(state);
+            }
+        } catch (InvalidCommandException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void ifOne(boolean state) throws InvalidCommandException {
+        if (state) {
+            throw new InvalidCommandException(ENG_LETTER_ENTERED);
+        } else  {
+            throw new InvalidCommandException(UNKNOWN_COMMAND);
+        }
+    }
+
+    private void ifMoreThanOne( boolean state) throws InvalidCommandException {
+        if (state) {
+            throw new InvalidCommandException(MORE_THAN_ONE_LETTER);
+        } else {
+            throw new InvalidCommandException(UNKNOWN_COMMAND);
+        }
+    }
+
+    private void ifIsEmpty(boolean state) throws InvalidCommandException {
+        if (!state) {
+            throw new InvalidCommandException(NOTHING_INPUT_MESSAGE_ON_GAME_OFF);
+        } else {
+            throw new InvalidCommandException(NOTHING_INPUT_MESSAGE_ON_GAME_ON);
+        }
     }
 
     private String getPicture(int count) {
