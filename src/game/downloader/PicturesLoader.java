@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class PicturesLoader {
-
+    public static final String PICTURE_PATH = "resources/pics.txt";
     private static final String ERROR = "Загрузка картинок не удалась";
 
-    public static List<String> loadPictures(BufferedReader fileReader) {
+    public static List<String> load(BufferedReader fileReader) {
         List<String> pictures = new ArrayList<>();
         StringBuilder symbolicPics = new StringBuilder();
         String pic;
@@ -29,6 +29,5 @@ public final class PicturesLoader {
             System.out.printf("%s; %s", ERROR, e.getMessage());
             throw new RuntimeException(e);
         }
-
     }
 }

@@ -7,16 +7,13 @@ import java.util.List;
 import java.util.Set;
 
 public final class DictionaryLoader {
-
+    public static final String DICTIONARY_PATH = "resources/russian_Words.txt";
     private static final String ERROR = "Загрузка словаря не удалась";
 
-    public static List<String> loadDictionary(BufferedReader fileReader)  {
-
+    public static List<String> load(BufferedReader fileReader)  {
             Set<String> dictionary = new HashSet<>();
             String line;
-
         try {
-
             while ((line = fileReader.readLine()) != null) {
                 if (!line.isEmpty()) {
                     String hyphen = "-";
@@ -26,7 +23,6 @@ public final class DictionaryLoader {
                     }
                 }
             }
-
             return new ArrayList<>(dictionary);
         } catch (Exception e) {
             System.out.printf("%s; %s", ERROR, e.getMessage());

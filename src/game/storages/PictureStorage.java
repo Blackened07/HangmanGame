@@ -3,6 +3,7 @@ package game.storages;
 import java.util.List;
 
 public class PictureStorage {
+
     private final List<String> pictures;
 
     public PictureStorage(List<String> pictures) {

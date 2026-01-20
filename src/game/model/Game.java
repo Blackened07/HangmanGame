@@ -1,95 +1,77 @@
 package game.model;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Game {
 
-    public static final int ATTEMPTS_NUMBER = 7;
-    private static final char EMPTY_SLOT = ' ';
+    public final int ATTEMPTS_NUMBER = 7;
 
-    private final EncodedWord encodedWord;
+    private final SecretWord secretWord;
+    private final Set<Character> openedLetters;
+    private GameStatus status;
+    private int mistakeCount;
 
-    private final List<Character> enteredLetters;
-    private char enteredLetter;
-
-    private int count;
-
-    public Game(String encodedWord) {
-        this.encodedWord = new EncodedWord(encodedWord);
-        this.enteredLetters = new ArrayList<>();
+    public Game(String word) {
+        this.secretWord = new SecretWord(word);
+        this.openedLetters = new LinkedHashSet<>();
+        this.status = GameStatus.IN_PROGRESS;
     }
 
-    public String getEncodedWordMask() {
-        return encodedWord.getMask().toString();
+    public SecretWord getSecretWord() {
+        return secretWord;
     }
 
-    public String getEncodedWord() {
-        return encodedWord.get().toString();
+    public GameStatus getStatus() {
+        return status;
     }
 
-    public int getEncodedWordSize() {
-        return encodedWord.getMaskSize();
+    public Set<Character> getOpenedLetters() {
+        return openedLetters;
     }
 
-    public char getEnteredLetter() {
-        return enteredLetter;
+    public int getMistakeCount() {
+        return mistakeCount - 1;
     }
 
-    public int getCount() {
-        return count;
+    public int getAttemptsLeft() {
+        return ATTEMPTS_NUMBER - mistakeCount;
     }
 
-    public int getAttempt() {
-        return ATTEMPTS_NUMBER - count;
-    }
+    public boolean open(char letter) {
 
-    public void setCount() {
-        this.count += 1;
-    }
-
-    public String getEnteredLetters() {
-        return enteredLetters.toString();
-    }
-
-    public void setEnteredLetter(char enteredLetter) {
-        this.enteredLetter = enteredLetter;
-        addLetterToList();
-    }
-
-    public boolean isPlayerEnterEqualsEncodedWordLetters(char playerEnter) {
-        return encodedWord.get().contains(playerEnter);
-    }
-
-    public boolean isPlayerEnterNotDuplicate(char playerEnter) {
-        return !enteredLetters.contains(playerEnter);
-    }
-
-    public void replaceEncodedToLetter(char playerEnter) {
-        for (int letterIndex = 0; letterIndex < encodedWord.getMaskSize(); letterIndex++) {
-            if (encodedWord.get().get(letterIndex) == playerEnter) {
-                encodedWord.getMask().set(letterIndex, playerEnter);
-            }
+        if (secretWord.isLetterExist(letter)) {
+            return true;
+        } else {
+            mistakeCount++;
+            return false;
         }
+
+    }
+
+    public boolean isDuplicate(char letter) {
+        if (!openedLetters.contains(letter)) {
+            openedLetters.add(letter);
+            return false;
+        }
+        return true;
     }
 
     public boolean isWin() {
-        char code = EMPTY_SLOT;
-        for (char letter : encodedWord.getMask()) {
-            if (letter == encodedWord.getCODE()) {
-                code = letter;
-            }
+
+        if (secretWord.checkAllOpenedLetters()) {
+            status = GameStatus.WIN;
+            return true;
         }
-        return code == EMPTY_SLOT;
+        return false;
     }
 
-    public boolean isCountToLose() {
-        return count == ATTEMPTS_NUMBER;
+    public boolean isLose() {
+        if (getAttemptsLeft() == 0) {
+            status = GameStatus.LOSE;
+            return true;
+        }
+        return false;
     }
-
-    private void addLetterToList() {
-        if (!enteredLetters.contains(enteredLetter))
-            enteredLetters.add(enteredLetter);
-    }
-
 }
