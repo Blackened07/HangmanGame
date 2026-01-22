@@ -18,11 +18,20 @@ public class SecretWord {
     public boolean isLetterExist(char letter) {
         for (Letter l : secretWord) {
             if (l.getLetter() == letter) {
-                l.setOpen(true);
+//                l.setOpen(true);
                 return true;
             }
         }
         return false;
+    }
+
+    public void open(char letter) {
+        for (Letter l : secretWord) {
+            if (l.getLetter() == letter) {
+                l.setOpen(true);
+            }
+        }
+
     }
 
     public boolean checkAllOpenedLetters() {
@@ -44,5 +53,8 @@ public class SecretWord {
         return secretWord;
     }
 
-
+    @Override
+    public String toString() {
+        return secretWord.toString();
+    }
 }

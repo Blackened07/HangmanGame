@@ -2,5 +2,6 @@ package game.view;
 
 public enum MenuStatus {
     LAUNCHER,
-    SELECTOR
+    SELECTOR,
+    CLOSED
 }

@@ -35,4 +35,8 @@ public class Letter {
         return Objects.hash(letter, isOpen);
     }
 
+   @Override
+    public String toString() {
+        return letter.toString();
+    }
 }

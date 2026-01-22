@@ -17,13 +17,10 @@ public class MainMenuView implements View<MenuStatus> {
             
             Желаю вам приятной игры!
             """;
-    private static final String SELECTOR_MESSAGE = "Что-бы начать заново введите команду: Старт!\nЕсли хотите выйти введите: Выход";
+
 
     @Override
     public void render(MenuStatus status) {
-        switch (status) {
-            case LAUNCHER -> System.out.printf("%s", LAUNCHER_MESSAGE);
-            case SELECTOR -> System.out.printf("%s", SELECTOR_MESSAGE);
-        }
+        System.out.printf("%s", LAUNCHER_MESSAGE);
     }
 }

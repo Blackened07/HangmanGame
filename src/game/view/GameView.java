@@ -18,6 +18,7 @@ public class GameView implements View<GameStatus>{
     private static final String ATTEMPTS_NUMBER = "Количество попыток: ";
     private static final String ATTEMPTS_LEFT = "Попыток осталось: ";
     private static final String OPENED_LETTERS = "Введённые вами буквы: ";
+    private static final String SELECTOR_MESSAGE = "Что-бы начать заново введите команду: Старт!\nЕсли хотите выйти введите: Выход";
 
     public GameView(SecretWord word, Game game) {
         this.word = word;
@@ -28,8 +29,8 @@ public class GameView implements View<GameStatus>{
     public void render(GameStatus status) {
         switch(status) {
             case IN_PROGRESS -> renderRoundMessage();
-            case WIN -> System.out.printf("%s%s\n", WIN, game.getSecretWord());
-            case LOSE -> System.out.printf("%s%s\n", LOSE, game.getSecretWord());
+            case WIN -> System.out.printf("%s%s\n%s", WIN, word.toString(), SELECTOR_MESSAGE);
+            case LOSE -> System.out.printf("%s%s\n%s", LOSE, word.toString(), SELECTOR_MESSAGE);
         }
     }
 
@@ -47,7 +48,7 @@ public class GameView implements View<GameStatus>{
     private String renderMask() {
         List<Letter> secretWord = word.getSecretWord();
 
-       return secretWord.stream().map((Function<Letter, Object>) letter -> {
+       return secretWord.stream().map((Function<Letter, Object>)letter -> {
             if (letter.isOpen()) {
                 return letter.getLetter();
             } else {

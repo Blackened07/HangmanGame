@@ -42,6 +42,7 @@ public class Game {
     public boolean open(char letter) {
 
         if (secretWord.isLetterExist(letter)) {
+            secretWord.open(letter);
             return true;
         } else {
             mistakeCount++;

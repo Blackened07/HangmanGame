@@ -1,25 +1,19 @@
 package game.view;
 
-import game.downloader.FileLoader;
-import game.downloader.PicturesLoader;
+
 import game.storages.PictureStorage;
 
 public class HangmanView implements View<Integer> {
 
-    private final PictureStorage pictureStorage;
+    private final PictureStorage pictures;
 
-    public HangmanView() {
-        this.pictureStorage = new PictureStorage(
-                FileLoader.loadFile(
-                        PicturesLoader.PICTURE_PATH,
-                        PicturesLoader::load)
-        );
-
+    public HangmanView(PictureStorage pictures) {
+        this.pictures = pictures;
     }
 
     @Override
     public void render(Integer index) {
-        System.out.println(pictureStorage.get(index));
+        System.out.println(pictures.get(index));
     }
 
 }

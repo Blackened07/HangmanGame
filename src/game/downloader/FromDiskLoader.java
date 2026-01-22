@@ -1,12 +1,14 @@
 package game.downloader;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.List;
 import java.util.function.Function;
 
-public final class FileLoader {
+public class FromDiskLoader implements Loader {
 
-    public static List<String> loadFile(String path, Function<BufferedReader, List<String>> load) {
+    @Override
+    public List<String> loadFile(String path, Function<BufferedReader, List<String>> load) {
 
         try (BufferedReader fileReader = new BufferedReader(new FileReader(path))) {
 
@@ -17,7 +19,7 @@ public final class FileLoader {
             System.exit(0);
         }
 
-        return Collections.emptyList();
+        return List.of();
     }
 
 }
