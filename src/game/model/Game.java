@@ -10,22 +10,18 @@ public class Game {
 
     private final SecretWord secretWord;
     private final Set<Character> openedLetters;
-    private GameStatus status;
     private int mistakeCount;
 
     public Game(String word) {
         this.secretWord = new SecretWord(word);
         this.openedLetters = new LinkedHashSet<>();
-        this.status = GameStatus.IN_PROGRESS;
+
     }
 
     public SecretWord getSecretWord() {
         return secretWord;
     }
 
-    public GameStatus getStatus() {
-        return status;
-    }
 
     public Set<Character> getOpenedLetters() {
         return openedLetters;
@@ -60,19 +56,10 @@ public class Game {
     }
 
     public boolean isWin() {
-
-        if (secretWord.checkAllOpenedLetters()) {
-            status = GameStatus.WIN;
-            return true;
-        }
-        return false;
+        return secretWord.checkAllOpenedLetters();
     }
 
     public boolean isLose() {
-        if (getAttemptsLeft() == 0) {
-            status = GameStatus.LOSE;
-            return true;
-        }
-        return false;
+        return getAttemptsLeft() == 0;
     }
 }

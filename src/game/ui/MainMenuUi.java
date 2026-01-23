@@ -2,9 +2,7 @@ package game.ui;
 
 import game.model.GameFactory;
 import game.validator.InvalidCommandException;
-import game.view.MainMenuView;
-import game.view.MenuStatus;
-import game.view.View;
+import game.view.GameState;
 
 public class MainMenuUi extends ConsoleUI {
 
@@ -14,8 +12,8 @@ public class MainMenuUi extends ConsoleUI {
 
     @Override
     public void process() {
-        getMainMenuView().render(MenuStatus.LAUNCHER);
-        getMainMenuView().render(MenuStatus.INFO);
+        getMainMenuView().render(GameState.LAUNCHER);
+        getMainMenuView().render(GameState.INFO);
 
             while (!isGameOn()) {
                 String command = getLine();

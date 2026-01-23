@@ -4,7 +4,7 @@ import game.model.GameFactory;
 import game.validator.InvalidCommandException;
 import game.view.ExceptionView;
 import game.view.MainMenuView;
-import game.view.MenuStatus;
+import game.view.GameState;
 import game.view.View;
 
 import java.util.Scanner;
@@ -15,7 +15,7 @@ public abstract class ConsoleUI {
     private final GameFactory gameFactory;
     private boolean isGameOn;
     private final View<String> exceptionView;
-    private final View<MenuStatus> mainMenuView;
+    private final View<GameState> mainMenuView;
     private final String START = "старт";
     private final String EXIT = "выход";
     protected static final String RUS_PATTERN = "[а-яёА-ЯЁ]";
@@ -50,7 +50,7 @@ public abstract class ConsoleUI {
         return exceptionView;
     }
 
-    public View<MenuStatus> getMainMenuView() {
+    public View<GameState> getMainMenuView() {
         return mainMenuView;
     }
 
@@ -62,7 +62,7 @@ public abstract class ConsoleUI {
             case EXIT -> {
                 if (isGameOn()) {
                     setGameOn(false);
-                    mainMenuView.render(MenuStatus.INFO);
+                    mainMenuView.render(GameState.INFO);
                 } else {
                     System.exit(0);
                 }

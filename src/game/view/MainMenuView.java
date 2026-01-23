@@ -1,6 +1,6 @@
 package game.view;
 
-public class MainMenuView implements View<MenuStatus> {
+public class MainMenuView implements View<GameState> {
 
     private final String LAUNCHER_MESSAGE = """
             Добро пожаловать в игру "Виселица"
@@ -22,7 +22,7 @@ public class MainMenuView implements View<MenuStatus> {
 
 
     @Override
-    public void render(MenuStatus status) {
+    public void render(GameState status) {
         switch (status) {
             case LAUNCHER -> System.out.println(LAUNCHER_MESSAGE);
             case INFO -> System.out.println(COMMAND_INFORMATION_MESSAGE);
