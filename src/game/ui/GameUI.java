@@ -26,7 +26,7 @@ public class GameUI extends ConsoleUI {
     @Override
     public void process() {
         setGameOn(true);
-        System.out.println("!!!----Игра началась----!!!");
+        System.out.println();
 
         while (isGameOn()) {
             gameView.render(IN_PROGRESS);

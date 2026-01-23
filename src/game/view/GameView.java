@@ -11,6 +11,7 @@ public class GameView implements View<GameState>{
     private final SecretWord word;
     private final Game game;
     private static final char MASK_SYMBOL = '*';
+    private static final String START = "!!!----Игра началась----!!!";
     private static final String WIN = "ВЫ ПОБЕДИЛИ!!! Загаданное слово: ";
     private static final String LOSE = "ВЫ ПРОИГРАЛИ!!! Загаданное слово: ";
     private static final String SECRET_WORD = "Загаданное слово: ";
@@ -30,6 +31,7 @@ public class GameView implements View<GameState>{
     @Override
     public void render(GameState state) {
         switch(state) {
+            case START -> System.out.println(START);
             case IN_PROGRESS -> renderRoundMessage();
             case DUPLICATE -> System.out.println(DUPLICATE_MESSAGE);
             case RIGHT_ATTEMPT -> System.out.println(RIGHT);
