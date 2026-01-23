@@ -5,7 +5,7 @@ import game.downloader.Loader;
 import java.io.BufferedReader;
 import java.util.*;
 
-public class Dictionary implements Storage {
+public class Dictionary {
     private final Loader loader;
     private List<String> dictionary;
 
@@ -20,12 +20,10 @@ public class Dictionary implements Storage {
         return dictionary.get(random.nextInt(wordsNumbers));
     }
 
-    @Override
     public void set(String path) {
         this.dictionary = loader.loadFile(path, Dictionary::load);
     }
 
-    @Override
     public boolean isEmpty() {
         return dictionary.isEmpty();
     }

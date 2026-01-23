@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PictureStorage implements Storage{
+public class PictureStorage {
 
     private final Loader loader;
     private List<String> pictures;
@@ -20,12 +20,10 @@ public class PictureStorage implements Storage{
         return pictures.get(index);
     }
 
-    @Override
     public void set(String path) {
         this.pictures = loader.loadFile(path, PictureStorage::load);
     }
 
-    @Override
     public boolean isEmpty() {
         return pictures.isEmpty();
     }

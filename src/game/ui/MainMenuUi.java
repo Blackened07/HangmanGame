@@ -1,29 +1,31 @@
 package game.ui;
 
 import game.model.GameFactory;
+import game.validator.InvalidCommandException;
 import game.view.MainMenuView;
 import game.view.MenuStatus;
 import game.view.View;
 
 public class MainMenuUi extends ConsoleUI {
-    private final View<MenuStatus> mainMenu;
 
     public MainMenuUi(GameFactory gameFactory) {
         super(gameFactory);
-        this.mainMenu = new MainMenuView();
     }
 
     @Override
     public void process() {
-        mainMenu.render(MenuStatus.LAUNCHER);
+        getMainMenuView().render(MenuStatus.LAUNCHER);
+        getMainMenuView().render(MenuStatus.INFO);
 
-        while (true) {
-            String command = getLine();
-            while (!isCommand(command)) {
-                command = getLine();
+            while (!isGameOn()) {
+                String command = getLine();
+                try {
+                    processCommand(command);
+                } catch (InvalidCommandException e) {
+                    getException().render(INVALID_MESSAGE);
+                }
             }
-            processCommand(command);
-        }
+
     }
 
 }

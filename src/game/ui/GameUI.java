@@ -22,38 +22,43 @@ public class GameUI extends ConsoleUI {
     }
 
     @Override
-    public void process() throws InvalidCommandException {
+    public void process() {
+        setGameOn(true);
         System.out.println("!!!----Игра началась----!!!");
 
-        while (game.getStatus() == GameStatus.IN_PROGRESS) {
+        while (isGameOn()) {
             gameView.render(game.getStatus());
             String line = getLine();
 
-            if (isCommand(line)) {
+            try {
                 processCommand(line);
+                processGame(line);
+            } catch (InvalidCommandException e) {
+                getException().render(INVALID_MESSAGE);
             }
-            if (isOneValidLetter(line)) {
-                char letter = line.charAt(0);
+        }
+    }
 
-                if (game.isDuplicate(letter)) {
-                    System.out.printf("Вы уже вводили букву %s\n", letter);
-                } else {
-                    if (game.open(letter)) {
-                        System.out.println("RIGHT");
-                    } else {
-                        System.out.println("WRONG");
-                        hangman.render(game.getMistakeCount());
-                    }
-                }
+    private void processGame(String line) {
+        char letter = line.charAt(0);
 
-                if (game.isWin()) {
-                    gameView.render(game.getStatus());
-                } else if (game.isLose()) {
-                    gameView.render(game.getStatus());
-                }
+        if (game.isDuplicate(letter)) {
+            System.out.printf("Вы уже вводили букву %s\n", letter);
+        } else {
+            if (game.open(letter)) {
+                System.out.println("RIGHT");
             } else {
-                throw new InvalidCommandException(INVALID_MESSAGE);
+                System.out.println("WRONG");
+                hangman.render(game.getMistakeCount());
             }
+        }
+
+        if (game.isWin()) {
+            setGameOn(false);
+            gameView.render(game.getStatus());
+        } else if (game.isLose()) {
+            setGameOn(false);
+            gameView.render(game.getStatus());
         }
     }
 

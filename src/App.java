@@ -5,7 +5,7 @@ import game.storages.Dictionary;
 import game.storages.PictureStorage;
 import game.ui.MainMenuUi;
 
-public class Main {
+public class App {
 
     public static void main(String[] args) {
 
@@ -18,6 +18,5 @@ public class Main {
 
         MainMenuUi m = new MainMenuUi(gameFactory);
         m.process();
-
     }
 }

@@ -3,7 +3,8 @@ package game.validator;
 public enum GameCommands {
     START_GAME("старт"),
     RESTART_GAME("рестарт"),
-    EXIT_GAME("выход");
+    EXIT_GAME("выход"),
+    LETTER("[а-яёА-ЯЁ]");
 
     private final String command;
 
