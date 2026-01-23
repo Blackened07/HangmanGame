@@ -28,7 +28,7 @@ public class Dictionary {
         return dictionary.isEmpty();
     }
 
-    private static List<String> load(BufferedReader fileReader)  {
+    private static List<String> load(BufferedReader fileReader) {
         Set<String> dictionary = new HashSet<>();
         String line;
         try {

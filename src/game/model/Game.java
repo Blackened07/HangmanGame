@@ -22,7 +22,6 @@ public class Game {
         return secretWord;
     }
 
-
     public Set<Character> getOpenedLetters() {
         return openedLetters;
     }

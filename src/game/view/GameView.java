@@ -7,7 +7,7 @@ import game.model.SecretWord;
 import java.util.List;
 import java.util.function.Function;
 
-public class GameView implements View<GameState>{
+public class GameView implements View<GameState> {
     private final SecretWord word;
     private final Game game;
     private static final char MASK_SYMBOL = '*';
@@ -31,7 +31,7 @@ public class GameView implements View<GameState>{
 
     @Override
     public void render(GameState state) {
-        switch(state) {
+        switch (state) {
             case START -> System.out.println(START);
             case IN_PROGRESS -> renderRoundMessage();
             case DUPLICATE -> System.out.println(DUPLICATE_MESSAGE);
@@ -57,7 +57,7 @@ public class GameView implements View<GameState>{
     private String renderMask() {
         List<Letter> secretWord = word.getSecretWord();
 
-       return secretWord.stream().map((Function<Letter, Object>)letter -> {
+        return secretWord.stream().map((Function<Letter, Object>) letter -> {
             if (letter.isOpen()) {
                 return letter.getLetter();
             } else {

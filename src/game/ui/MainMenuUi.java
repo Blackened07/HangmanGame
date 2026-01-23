@@ -15,14 +15,14 @@ public class MainMenuUi extends ConsoleUI {
         getMainMenuView().render(GameState.LAUNCHER);
         getMainMenuView().render(GameState.INFO);
 
-            while (!isGameOn()) {
-                String command = getLine();
-                try {
-                    processCommand(command);
-                } catch (InvalidCommandException e) {
-                    getExceptionView().render(INVALID_MESSAGE);
-                }
+        while (!isGameOn()) {
+            String command = getLine();
+            try {
+                processCommand(command);
+            } catch (InvalidCommandException e) {
+                getExceptionView().render(INVALID_MESSAGE);
             }
+        }
 
     }
 

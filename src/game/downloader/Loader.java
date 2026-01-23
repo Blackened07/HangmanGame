@@ -6,5 +6,6 @@ import java.util.function.Function;
 
 public interface Loader {
     String ERROR = "Загрузка словаря не удалась";
+
     List<String> loadFile(String path, Function<BufferedReader, List<String>> load);
 }
