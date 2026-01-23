@@ -20,7 +20,7 @@ public class MainMenuUi extends ConsoleUI {
                 try {
                     processCommand(command);
                 } catch (InvalidCommandException e) {
-                    getException().render(INVALID_MESSAGE);
+                    getExceptionView().render(INVALID_MESSAGE);
                 }
             }
 

@@ -42,27 +42,24 @@ public abstract class ConsoleUI {
         return scanner.nextLine().toLowerCase();
     }
 
-    protected GameFactory getGameFactory() {
-        return gameFactory;
-    }
-
-    protected View<String> getException() {
+    protected View<String> getExceptionView() {
         return exceptionView;
     }
 
-    public View<GameState> getMainMenuView() {
+    protected View<GameState> getMainMenuView() {
         return mainMenuView;
     }
 
     protected void processCommand(String command) throws InvalidCommandException {
         switch (command) {
             case START -> {
-                new GameUI(getGameFactory()).process();
+                new GameUI(gameFactory).process();
             }
             case EXIT -> {
                 if (isGameOn()) {
                     setGameOn(false);
                     mainMenuView.render(GameState.INFO);
+
                 } else {
                     System.exit(0);
                 }
@@ -79,7 +76,7 @@ public abstract class ConsoleUI {
 
     }
 
-    private boolean isValidLetter(String line) {
+    protected boolean isValidLetter(String line) {
         return line.length() == 1 && !line.replaceAll(RUS_PATTERN, "").equals(line);
     }
 

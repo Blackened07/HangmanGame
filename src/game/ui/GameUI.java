@@ -26,7 +26,7 @@ public class GameUI extends ConsoleUI {
     @Override
     public void process() {
         setGameOn(true);
-        System.out.println();
+        System.out.println(START);
 
         while (isGameOn()) {
             gameView.render(IN_PROGRESS);
@@ -36,12 +36,16 @@ public class GameUI extends ConsoleUI {
                 processCommand(line);
                 processGame(line);
             } catch (InvalidCommandException e) {
-                getException().render(INVALID_MESSAGE);
+                getExceptionView().render(INVALID_MESSAGE);
             }
         }
     }
 
     private void processGame(String line) {
+
+        if (line.length() != 1) {
+            return;
+        }
         char letter = line.charAt(0);
 
         if (game.isDuplicate(letter)) {

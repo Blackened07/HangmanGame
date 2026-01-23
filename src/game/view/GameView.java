@@ -18,7 +18,7 @@ public class GameView implements View<GameState>{
     private static final String ATTEMPTS_NUMBER = "Количество попыток: ";
     private static final String ATTEMPTS_LEFT = "Попыток осталось: ";
     private static final String OPENED_LETTERS = "Введённые вами буквы: ";
-    private static final String DUPLICATE_MESSAGE = "Вы уже вводили букву %s\n";
+    private static final String DUPLICATE_MESSAGE = "Вы уже вводили букву\n";
     private static final String RIGHT = "ВЕРНО!";
     private static final String WRONG = "Неверно...";
     private static final String SELECTOR_MESSAGE = "Что-бы начать заново введите команду: Старт!\nЕсли хотите выйти введите: Выход\n";
