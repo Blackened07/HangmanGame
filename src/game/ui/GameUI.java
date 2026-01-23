@@ -3,6 +3,7 @@ package game.ui;
 import game.model.Game;
 import game.model.GameFactory;
 import game.model.GameStatus;
+import game.validator.InvalidCommandException;
 import game.view.GameView;
 import game.view.HangmanView;
 
@@ -21,17 +22,17 @@ public class GameUI extends ConsoleUI {
     }
 
     @Override
-    public void process() {
+    public void process() throws InvalidCommandException {
         System.out.println("!!!----Игра началась----!!!");
 
         while (game.getStatus() == GameStatus.IN_PROGRESS) {
             gameView.render(game.getStatus());
             String line = getLine();
 
-            while (!getValidator().isValid(line)) {
-                line = getLine();
+            if (isCommand(line)) {
+                processCommand(line);
             }
-            if (!getValidator().isCommand(line)) {
+            if (isOneValidLetter(line)) {
                 char letter = line.charAt(0);
 
                 if (game.isDuplicate(letter)) {
@@ -51,7 +52,7 @@ public class GameUI extends ConsoleUI {
                     gameView.render(game.getStatus());
                 }
             } else {
-                processCommand(line);
+                throw new InvalidCommandException(INVALID_MESSAGE);
             }
         }
     }

@@ -10,18 +10,15 @@ import java.util.Scanner;
 
 public abstract class ConsoleUI {
 
-    private final View<String> exception;
     private final Scanner scanner;
     private final GameFactory gameFactory;
-    private final Validator validator;
-
-    private final String invalidMessage = "INVALID MESSAGE";
+    private final View<String> exception;
+    public static final String INVALID_MESSAGE = "INVALID MESSAGE";
 
     public ConsoleUI(GameFactory gameFactory) {
         this.gameFactory = gameFactory;
         this.exception = new ExceptionView();
         this.scanner = new Scanner(System.in);
-        this.validator = new Validator();
     }
 
     public abstract void process() throws InvalidCommandException;
@@ -30,21 +27,35 @@ public abstract class ConsoleUI {
         return scanner.nextLine().toLowerCase();
     }
 
-    protected Validator getValidator() {
-        return validator;
+    protected boolean isCommand(String line) {
+        return isLineEqualsExit(line) || isLineEqualsStart(line);
+    }
+
+    protected boolean isOneValidLetter(String line) {
+        String rus_pattern = "[а-яёА-ЯЁ]";
+        return line.length() == 1 && !line.replaceAll(rus_pattern, "").equals(line);
     }
 
     protected void processCommand(String command) {
         try {
-            if (validator.isLineEqualsStart(command)) {
+            if (isLineEqualsStart(command)) {
                 new GameUI(gameFactory).process();
-            } else if (validator.isLineEqualsExit(command)) {
+            } else if (isLineEqualsExit(command)) {
                 System.exit(1);
             } else {
-                throw new InvalidCommandException(invalidMessage);
+                throw new InvalidCommandException(INVALID_MESSAGE);
             }
         } catch (InvalidCommandException e) {
             exception.render(e.getMessage());
         }
     }
+
+    private boolean isLineEqualsStart(String line) {
+        return line.equals(GameCommands.START_GAME.getCommand());
+    }
+
+    private boolean isLineEqualsExit(String line) {
+        return line.equals(GameCommands.EXIT_GAME.getCommand());
+    }
+
 }

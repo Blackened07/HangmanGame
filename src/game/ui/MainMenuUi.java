@@ -19,14 +19,10 @@ public class MainMenuUi extends ConsoleUI {
 
         while (true) {
             String command = getLine();
-            while (!getValidator().isValid(command)) {
+            while (!isCommand(command)) {
                 command = getLine();
             }
-            if (getValidator().isCommand(command)) {
-                processCommand(command);
-            } else {
-                System.out.println("you idiot");
-            }
+            processCommand(command);
         }
     }
 
