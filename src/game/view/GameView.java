@@ -21,6 +21,7 @@ public class GameView implements View<GameState>{
     private static final String DUPLICATE_MESSAGE = "Вы уже вводили букву\n";
     private static final String RIGHT = "ВЕРНО!";
     private static final String WRONG = "Неверно...";
+    private static final String INVALID = "Некорректный ввод";
     private static final String SELECTOR_MESSAGE = "Что-бы начать заново введите команду: Старт!\nЕсли хотите выйти введите: Выход\n";
 
     public GameView(SecretWord word, Game game) {
@@ -36,6 +37,7 @@ public class GameView implements View<GameState>{
             case DUPLICATE -> System.out.println(DUPLICATE_MESSAGE);
             case RIGHT_ATTEMPT -> System.out.println(RIGHT);
             case WRONG_ATTEMPT -> System.out.println(WRONG);
+            case INVALID -> System.out.println(INVALID);
             case WIN -> System.out.printf("%s%s\n%s", WIN, word.toString(), SELECTOR_MESSAGE);
             case LOSE -> System.out.printf("%s%s\n%s", LOSE, word.toString(), SELECTOR_MESSAGE);
         }

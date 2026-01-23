@@ -8,6 +8,7 @@ public enum GameState {
     DUPLICATE,
     RIGHT_ATTEMPT,
     WRONG_ATTEMPT,
+    INVALID,
     WIN,
     LOSE,;
 }

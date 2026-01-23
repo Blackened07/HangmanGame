@@ -26,7 +26,7 @@ public class GameUI extends ConsoleUI {
     @Override
     public void process() {
         setGameOn(true);
-        System.out.println(START);
+        gameView.render(START);
 
         while (isGameOn()) {
             gameView.render(IN_PROGRESS);
@@ -43,7 +43,8 @@ public class GameUI extends ConsoleUI {
 
     private void processGame(String line) {
 
-        if (line.length() != 1) {
+        if (isValidLetter(line)) {
+            gameView.render(INVALID);
             return;
         }
         char letter = line.charAt(0);
@@ -66,6 +67,10 @@ public class GameUI extends ConsoleUI {
             setGameOn(false);
             gameView.render(LOSE);
         }
+    }
+
+    private boolean isValidLetter(String line) {
+        return line.replaceAll(RUS_PATTERN, "").equals(line);
     }
 
 }

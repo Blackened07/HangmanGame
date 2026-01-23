@@ -65,10 +65,9 @@ public abstract class ConsoleUI {
                 }
             }
             default -> {
-                if (isValidLetter(command) && !isGameOn) {
+                if (command.length() != 1) {
                     throw new InvalidCommandException(INVALID_MESSAGE);
-                }
-                if (!isValidLetter(command)) {
+                } else if (!isGameOn) {
                     throw new InvalidCommandException(INVALID_MESSAGE);
                 }
             }
@@ -76,8 +75,6 @@ public abstract class ConsoleUI {
 
     }
 
-    protected boolean isValidLetter(String line) {
-        return line.length() == 1 && !line.replaceAll(RUS_PATTERN, "").equals(line);
-    }
+
 
 }
